@@ -1,0 +1,6 @@
+@import url("./global.css");
+body {
+  min-height: 100vh;
+  background-color: #192222;
+  background-image: var(--night-gradient);
+}
