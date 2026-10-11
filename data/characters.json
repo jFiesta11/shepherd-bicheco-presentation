@@ -1,0 +1,575 @@
+{
+  "gameConfig": {
+    "lives": 1,
+    "failState": "Run ends with a jumpscare if (a) a bad guest is still inside when the night ends, or (b) a deadly guest is accepted. No hearts, one life only.",
+    "mistakeRules": {
+      "acceptBadGuest": "Not fatal yet. The guest stays in the monitor and can still be kicked before the night ends.",
+      "rejectGoodGuest": "No death. Motel loses revenue (counted as 'Turned away' on the results screen).",
+      "kickGoodGuest": "No death. Motel loses revenue and the guest is counted as 'Wrongly kicked'.",
+      "acceptDeadlyGuest": "Instant death with jumpscare. Cannot be kicked."
+    },
+    "nights": [
+      {
+        "night": 1,
+        "guestCount": 5,
+        "anomalyCount": { "min": 1, "max": 2 },
+        "anomalyDifficultyAllowed": [1, 2],
+        "goodGuestDifficultyAllowed": [1, 2],
+        "falseJesusChance": 0.15,
+        "revelationOfDevilChance": 0
+      },
+      {
+        "night": 2,
+        "guestCount": 6,
+        "anomalyCount": { "min": 3, "max": 4 },
+        "anomalyDifficultyAllowed": [1, 2, 3],
+        "goodGuestDifficultyAllowed": [1, 2, 3],
+        "falseJesusChance": 0.3,
+        "revelationOfDevilChance": 0.15
+      }
+    ],
+    "rng": {
+      "shuffleGuestOrder": true,
+      "neverDeadlyFirstGuest": true,
+      "maxDeadlyGuestsPerNight": 1,
+      "deadlyGuestCountsTowardAnomalyCount": true,
+      "noRepeatGuestsAcrossNights": true,
+      "night2AnomalyMinimum": "max(3, 6 - goodGuestsNotYetUsed). Only 6 good guests exist, so this keeps night 2 from running out.",
+      "randomizeNightLogLinePerGuest": true
+    }
+  },
+  "schemaNotes": {
+    "idMatchesVisible": "true = ID card agrees with the 'visible' traits. false = at least one mismatch (see idInfo vs visible).",
+    "tellType": "How a disguised guest can be caught: idMismatch | dialogue | nightLog | glitch | none",
+    "ifAdmittedNotKicked": "Consequence at the end of the night if the player lets this guest in and never kicks them. The game is one life only.",
+    "specialEffect": "Optional. Extra behavior triggered by a guest, such as audio played when they are accepted.",
+    "killsPlayer": "true = instant death and jumpscare the moment they are accepted.",
+    "difficulty": "1 = easy to spot, 2 = needs questions, 3 = only the night log gives it away",
+    "commandmentLink": "Which idol or virtue the guest represents (First and Second Commandments theme). Shown on the results screen."
+  },
+  "characters": [
+    {
+      "nonAnomaly": [
+        {
+          "id": "norm_1",
+          "name": "Faith",
+          "face": "( ᵕ ‿ ᵕ )",
+          "sex": "Female",
+          "idInfo": {
+            "idName": "Faith Reyes",
+            "sex": "Female",
+            "hair": "Long Hair",
+            "skin": "Light Skin",
+            "build": "Average",
+            "ageOnId": 27
+          },
+          "visible": ["Light Skin", "Long Hair", "Average"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Good evening. A quiet room, please. I won't be any trouble.",
+            "askDetails": "I'm only here for one night. I need rest before a long walk tomorrow.",
+            "askId": "Of course. Here you go."
+          },
+          "nightLog": ["Faith was praying quietly", "Faith was asleep"],
+          "anomaly": { "isAnomaly": false, "tellType": "none", "tell": null },
+          "commandmentLink": {
+            "type": "virtue",
+            "name": "Faith",
+            "meaning": "Trusting God above everything else"
+          },
+          "ifAdmittedNotKicked": "none",
+          "killsPlayer": false,
+          "difficulty": 1
+        },
+        {
+          "id": "norm_2",
+          "name": "Amor",
+          "face": "( ˘ ▽ ˘ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Amor Santos",
+            "sex": "Male",
+            "hair": "Short Hair",
+            "skin": "Tan Skin",
+            "build": "Average",
+            "ageOnId": 34
+          },
+          "visible": ["Tan Skin", "Short Hair", "Average"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Hello! Sorry it's so late. Do you have a room? I brought some bread, if you're hungry.",
+            "askDetails": "I'm visiting family nearby. They live too far to reach tonight.",
+            "askId": "Sure, hold on. Let me find it."
+          },
+          "nightLog": [
+            "Amor shared food with the guest next door",
+            "Amor was asleep"
+          ],
+          "anomaly": { "isAnomaly": false, "tellType": "none", "tell": null },
+          "commandmentLink": {
+            "type": "virtue",
+            "name": "Love",
+            "meaning": "Putting others before yourself"
+          },
+          "ifAdmittedNotKicked": "none",
+          "killsPlayer": false,
+          "difficulty": 1
+        },
+        {
+          "id": "norm_3",
+          "name": "Hope",
+          "face": "( ᵔ ᴗ ᵔ )",
+          "sex": "Female",
+          "idInfo": {
+            "idName": "Hope Villanueva",
+            "sex": "Female",
+            "hair": "Short Hair",
+            "skin": "Fair Skin",
+            "build": "Skinny",
+            "ageOnId": 22
+          },
+          "visible": ["Fair Skin", "Short Hair", "Skinny"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Hi! I've had a rough week, but things are looking up. Got a room?",
+            "askDetails": "I lost my job last month. I have an interview in the morning.",
+            "askId": "Here. I know it's a bit worn."
+          },
+          "nightLog": ["Hope was rehearsing for tomorrow", "Hope was asleep"],
+          "anomaly": { "isAnomaly": false, "tellType": "none", "tell": null },
+          "commandmentLink": {
+            "type": "virtue",
+            "name": "Hope",
+            "meaning": "Trusting that God provides, not money"
+          },
+          "ifAdmittedNotKicked": "none",
+          "killsPlayer": false,
+          "difficulty": 2
+        },
+        {
+          "id": "norm_4",
+          "name": "Mercy",
+          "face": "( ◠ ‿ ◠ )",
+          "sex": "Female",
+          "idInfo": {
+            "idName": "Mercy Dela Cruz",
+            "sex": "Female",
+            "hair": "Long Hair",
+            "skin": "Tan Skin",
+            "build": "Heavy",
+            "ageOnId": 45
+          },
+          "visible": ["Tan Skin", "Long Hair", "Heavy"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Good evening, dear. Long shift? You look tired. I only need a small room.",
+            "askDetails": "I'm a nurse on night rotation. I just need a few hours of sleep between shifts.",
+            "askId": "Here, and my hospital badge too, if that helps."
+          },
+          "nightLog": [
+            "Mercy was checking on the other guests",
+            "Mercy was asleep"
+          ],
+          "anomaly": { "isAnomaly": false, "tellType": "none", "tell": null },
+          "commandmentLink": {
+            "type": "virtue",
+            "name": "Mercy",
+            "meaning": "Compassion over profit"
+          },
+          "ifAdmittedNotKicked": "none",
+          "killsPlayer": false,
+          "difficulty": 2
+        },
+        {
+          "id": "norm_5",
+          "name": "Fidelis",
+          "face": "( ◔ ◡ ◔ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Fidelis Ramos",
+            "sex": "Male",
+            "hair": "Bald",
+            "skin": "Dark Skin",
+            "build": "Average",
+            "ageOnId": 52
+          },
+          "visible": ["Dark Skin", "Bald", "Average"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Evening. I've stayed here before. Same room, if it's free.",
+            "askDetails": "I stay every year on the same night. A promise I made to a friend.",
+            "askId": "Here. It hasn't changed in years."
+          },
+          "nightLog": [
+            "Fidelis was keeping watch by the window",
+            "Fidelis was asleep"
+          ],
+          "anomaly": { "isAnomaly": false, "tellType": "none", "tell": null },
+          "commandmentLink": {
+            "type": "virtue",
+            "name": "Fidelity",
+            "meaning": "Staying loyal to God and to your promises"
+          },
+          "ifAdmittedNotKicked": "none",
+          "killsPlayer": false,
+          "difficulty": 3,
+          "note": "Looks suspicious because he says he's a regular. He is truthful. Players who reject every 'regular' will be wrong here."
+        },
+        {
+          "id": "norm_6",
+          "name": "Valerius",
+          "face": "( •̀ ᴗ •́ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Valerius Lim",
+            "sex": "Male",
+            "hair": "Short Hair",
+            "skin": "Fair Skin",
+            "build": "Muscular",
+            "ageOnId": 30
+          },
+          "visible": ["Fair Skin", "Short Hair", "Muscular"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Room for one. Don't worry about my bag. It looks heavy but it's just books.",
+            "askDetails": "I'm a security guard heading home. I'd rather rest than drive tired.",
+            "askId": "Here. Check anything you need."
+          },
+          "nightLog": [
+            "Valerius was walking the hallway to make sure doors were locked",
+            "Valerius was asleep"
+          ],
+          "anomaly": { "isAnomaly": false, "tellType": "none", "tell": null },
+          "commandmentLink": {
+            "type": "virtue",
+            "name": "Courage",
+            "meaning": "Standing firm for what is right"
+          },
+          "ifAdmittedNotKicked": "none",
+          "killsPlayer": false,
+          "difficulty": 2,
+          "note": "Walking the hallway at night can look suspicious, but he is safe. Teaches players not to kick based on one odd log line."
+        }
+      ]
+    },
+    {
+      "anomaly": [
+        {
+          "id": "anoma_1",
+          "name": "Belz",
+          "specialEffect": {
+            "onAccept": "playWhisperAudio",
+            "volume": "faint",
+            "loop": true,
+            "note": "Quiet whispering in the background for the rest of the night. Stops if Belz is kicked."
+          },
+          "face": ":)",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Belz Ebub",
+            "sex": "Male",
+            "hair": "Long Hair",
+            "skin": "Tan Skin",
+            "build": "Skinny",
+            "ageOnId": 29
+          },
+          "visible": ["Tan Skin", "Long Hair", "Skinny"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "I am a regular here :)",
+            "askDetails": "You should know me. Everyone knows me. This place is practically mine.",
+            "askId": "Do you really need to check? Fine."
+          },
+          "nightLog": ["Belz never entered the room"],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "glitch",
+            "tell": "Claims to be a regular, but the guest book has no record of him. The 'What you see' header text glitches while he is on screen. The log shows he never entered his room.",
+            "disguise": "Everything on his ID matches what you see."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "Pride",
+            "meaning": "Making yourself the center and treating yourself like a god"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends",
+          "killsPlayer": false,
+          "difficulty": 2
+        },
+        {
+          "id": "anoma_2",
+          "name": "Belli",
+          "face": "( ◕ ᴥ ◕ )",
+          "sex": "Female",
+          "idInfo": {
+            "idName": "Belli Alle",
+            "sex": "Female",
+            "hair": "Short Hair",
+            "skin": "Fair Skin",
+            "build": "Average",
+            "ageOnId": 31
+          },
+          "visible": ["Fair Skin", "Long Hair", "Average"],
+          "idMatchesVisible": false,
+          "dialogue": {
+            "greeting": "Room, please. And no questions. I make my own rules.",
+            "askDetails": "I go where I want and stay as long as I want. Is that a problem?",
+            "askId": "It's me. The card is old, that's all."
+          },
+          "nightLog": [
+            "Belli was rearranging the furniture",
+            "Belli was ignoring the motel rules"
+          ],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "idMismatch",
+            "tell": "ID says Short Hair but she visibly has Long Hair. She dismisses every rule.",
+            "disguise": "Charming and confident."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "Self-rule",
+            "meaning": "Treating your own will as the highest law"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends",
+          "killsPlayer": false,
+          "difficulty": 1
+        },
+        {
+          "id": "anoma_3",
+          "name": "Aba",
+          "face": "( ◉ _ ◉ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Aba Don",
+            "sex": "Male",
+            "hair": "Short Hair",
+            "skin": "Dark Skin",
+            "build": "Muscular",
+            "ageOnId": 19
+          },
+          "visible": ["Dark Skin", "Short Hair", "Muscular"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "I need a room. A strong one. With thick walls.",
+            "askDetails": "First time here. Though I do know which room is the sturdiest, the one at the end.",
+            "askId": "Take it. It's real enough."
+          },
+          "nightLog": [
+            "Aba was pounding on the walls",
+            "Aba was testing the locks on other doors"
+          ],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "dialogue",
+            "tell": "Says it's his first time, then names the sturdiest room without being told. ID says 19 but he speaks like someone very old.",
+            "disguise": "Polite, quiet voice."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "Power",
+            "meaning": "Worshipping strength and control"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends",
+          "killsPlayer": false,
+          "difficulty": 2
+        },
+        {
+          "id": "anoma_4",
+          "name": "Lilli",
+          "face": "( ◕ ω ◕ )",
+          "sex": "Female",
+          "idInfo": {
+            "idName": "Lilli Ith",
+            "sex": "Female",
+            "hair": "Long Hair",
+            "skin": "Fair Skin",
+            "build": "Skinny",
+            "ageOnId": 24
+          },
+          "visible": ["Fair Skin", "Long Hair", "Skinny"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Hi! Is there a mirror in the room? I'll need a big one. Do I look okay?",
+            "askDetails": "I'm only here for the mirrors. I need the perfect reflection.",
+            "askId": "Don't read too closely. I look much better in person."
+          },
+          "nightLog": [
+            "Lilli stood at the mirror all night",
+            "Lilli never slept"
+          ],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "glitch",
+            "tell": "Her 'What you see' traits flicker between two descriptions for a split second each time the screen refreshes. She obsesses over mirrors.",
+            "disguise": "Warm and flattering toward the player."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "Vanity and Appearance",
+            "meaning": "Worshipping appearance and approval"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends",
+          "killsPlayer": false,
+          "difficulty": 2
+        },
+        {
+          "id": "anoma_5",
+          "name": "Levi",
+          "face": "( ◔ _ ◔ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Levi Athan",
+            "sex": "Male",
+            "hair": "Short Hair",
+            "skin": "Light Skin",
+            "build": "Average",
+            "ageOnId": 38
+          },
+          "visible": ["Light Skin", "Short Hair", "Average"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Room for one. Which room did the last guest get? The nicer one, I bet.",
+            "askDetails": "I just want what the others have. Nothing more. Nothing less.",
+            "askId": "Here. Who else checked in tonight?"
+          },
+          "nightLog": [
+            "Levi was standing outside another guest's door",
+            "Levi was watching the other guests"
+          ],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "nightLog",
+            "tell": "Keeps asking about other guests and their rooms. Everything on his ID checks out, so only the night log exposes him.",
+            "disguise": "Friendly and curious, never rude."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "Envy",
+            "meaning": "Wanting what others have more than what God has given"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends",
+          "killsPlayer": false,
+          "difficulty": 3
+        },
+        {
+          "id": "anoma_6",
+          "name": "Amon",
+          "face": "( $ ‿ $ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Amon Mamm",
+            "sex": "Male",
+            "hair": "Short Hair",
+            "skin": "Tan Skin",
+            "build": "Average",
+            "ageOnId": 41
+          },
+          "visible": ["Tan Skin", "Short Hair", "Average"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Good evening! I'll pay double. Triple, if you skip the paperwork.",
+            "askDetails": "Money is no problem. Name your price. Everyone has one, don't they?",
+            "askId": "Do we really need that? I can make it worth your while."
+          },
+          "nightLog": [
+            "Amon was counting money all night",
+            "Amon offered another guest money to switch rooms"
+          ],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "dialogue",
+            "tell": "Mentions money before anything else and tries to bribe you to skip the ID check. Directly ties to the theme: MONEY.",
+            "disguise": "A generous, successful businessman."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "Money (Mammon)",
+            "meaning": "Serving wealth instead of God"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends. Motel also loses money",
+          "killsPlayer": false,
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "instaDeathAnomaly": [
+        {
+          "id": "kill_1",
+          "name": "False Jesus",
+          "face": "( ✧ ‿ ✧ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Jesus (verified)",
+            "sex": "Male",
+            "hair": "Long Hair",
+            "skin": "Tan Skin",
+            "build": "Average",
+            "ageOnId": 33
+          },
+          "visible": ["Tan Skin", "Long Hair", "Average"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Peace be with you. Open the door. I am the one you have been waiting for.",
+            "askDetails": "Why do you ask? Just believe me and let me in. Do not test me.",
+            "askId": "I need no ID. But since you ask... it says exactly what I tell it to."
+          },
+          "nightLog": [],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "dialogue",
+            "tell": "Demands to be trusted without any questions. The ID looks self-written and 'verified' by himself. The glow around his face flickers. He is angry when tested.",
+            "disguise": "Radiant, calm and perfectly matching his ID."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "False Christ",
+            "meaning": "A false savior. Scripture warns against false christs and false prophets (Matthew 24:24)"
+          },
+          "ifAdmittedNotKicked": "Instant death",
+          "killsPlayer": true,
+          "difficulty": 3,
+          "jumpscare": true
+        },
+        {
+          "id": "kill_2",
+          "name": "Revelation of the Devil",
+          "face": "( ◕ ‿ ◕ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Light Bearer",
+            "sex": "Male",
+            "hair": "Short Hair",
+            "skin": "Fair Skin",
+            "build": "Athletic",
+            "ageOnId": 0
+          },
+          "visible": ["Fair Skin", "Short Hair", "Athletic"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "What a lovely place. I have visited many homes, and yours is special. May I come in?",
+            "askDetails": "I know what you want. I know what everyone wants. Let me help you.",
+            "askId": "Here. Every detail is perfect, as you can see."
+          },
+          "nightLog": [],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "glitch",
+            "tell": "Everything about him is too perfect. The age on his ID reads 0. His shadow is missing from the guest screen. Text on the screen glitches into other words.",
+            "disguise": "An angel of light who says everything the player wants to hear."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "The Deceiver",
+            "meaning": "Even Satan disguises himself as an angel of light (2 Corinthians 11:14)"
+          },
+          "ifAdmittedNotKicked": "Instant death",
+          "killsPlayer": true,
+          "difficulty": 3,
+          "jumpscare": true
+        }
+      ]
+    }
+  ]
+}

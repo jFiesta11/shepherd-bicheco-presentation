@@ -132,6 +132,12 @@ button {
   gap: 20px;
   text-align: center;
 }
+.guest-image { display: block; max-width: min(220px, 80vw); max-height: 180px; object-fit: contain; filter: brightness(.7) contrast(1.15); }
+.jumpscare { position: relative; overflow: hidden; background: #000; }
+.jumpscare-image { position: fixed; inset: 0; z-index: 5; width: 100vw; height: 100vh; max-height: none; object-fit: cover; filter: contrast(1.25) brightness(.8); pointer-events: none; animation: jumpscareFade 4s ease-out forwards; }
+.jumpscare-content { position: relative; z-index: 2; opacity: 0; animation: messageReveal 1.2s ease-out 3.2s forwards; }
+@keyframes jumpscareFade { from { opacity: 1; } to { opacity: 0; } }
+@keyframes messageReveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .speech {
   background: #4a4c57;
   color: white;
