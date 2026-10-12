@@ -420,6 +420,10 @@ button:disabled {
   object-fit: contain;
   filter: brightness(0.7) contrast(1.15);
 }
+.guest-image.jesus-image {
+  max-width: min(260px, 85vw);
+  max-height: 220px;
+}
 .jumpscare {
   position: relative;
   overflow: hidden;

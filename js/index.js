@@ -262,12 +262,13 @@ async function loadGame() {
   intro();
 }
 function faceMarkup(guest) {
+  const jesusClass = /jesus/i.test(guest.name || "") ? " jesus-image" : "";
   if (guest.special === "legion")
     return `<span class="legion-stack"><img class="guest-image legion-image" src="${assetUrl("img/legion.png")}" alt="Legion" /></span>`;
   if (guest.special === "belz")
     return `<span class="belz-face"><img class="belz-closed" src="${assetUrl("img/belz_1.png")}" alt="Belz" /><img class="belz-open" src="${assetUrl("img/belz_2.png")}" alt="" aria-hidden="true" /></span>`;
   return guest.faceAsset
-    ? `<img class="guest-image" src="${assetUrl(guest.faceAsset)}" alt="${escapeHtml(guest.name)}" />`
+    ? `<img class="guest-image${jesusClass}" src="${assetUrl(guest.faceAsset)}" alt="${escapeHtml(guest.name)}" />`
     : escapeHtml(guest.face);
 }
 function heartMarkup() {
