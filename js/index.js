@@ -15,6 +15,7 @@ let state = {
   guestIndex: 0,
   admitted: [],
   questions: 0,
+  goodMistakes: 0,
   turnedAway: 0,
   wronglyKicked: 0,
 };
@@ -97,12 +98,32 @@ function normalizeCharacter(raw, index, anomaly = false) {
     {
       aba: "img/aba.jpg",
       lilli: "img/lilli.jpg",
+      belz: "img/belz_1.png",
+      legion: "img/legion.png",
+      jesus: "img/jesus_at_the_door.jpeg",
       "false jesus": "img/jesus_at_the_door.jpeg",
     }[lowerName] || null;
   const roleSound =
-    { aba: "audio/aba.wav", amon: "audio/amon.wav", lilli: "audio/lilli.wav" }[
-      lowerName
-    ] || null;
+    {
+      aba: "audio/aba.wav",
+      amon: "audio/amon.wav",
+      lilli: "audio/lilli.wav",
+      belz: "audio/belz_dialogue.mp3",
+      legion: "audio/legion_hello.wav",
+    }[lowerName] || null;
+  const roleSpecial =
+    {
+      belz: "belz",
+      "false jesus": "falseJesus",
+      jesus: "falseJesus",
+      luci: "luci",
+      "revelation of the devil": "revelationDevil",
+      "false prophet": "falseProphet",
+      legion: "legion",
+    }[lowerName] ||
+    (raw.commandmentLink?.name?.toLowerCase() === "false prophet"
+      ? "falseProphet"
+      : null);
   return {
     characterId: raw.characterId || raw.id || `c_${index + 1}`,
     name,
@@ -119,13 +140,7 @@ function normalizeCharacter(raw, index, anomaly = false) {
     instantDeath: raw.instantDeath ?? raw.killsPlayer ?? false,
     actLog:
       raw.act_log || raw.actLog || raw.nightLog || "The guest was asleep.",
-    special:
-      raw.special ||
-      (lowerName === "belz"
-        ? "belz"
-        : lowerName === "false jesus"
-          ? "falseJesus"
-          : null),
+    special: raw.special || roleSpecial,
     specialEffect: effect,
     tellType: anomalyInfo.tellType || "none",
     commandmentLink: raw.commandmentLink || null,
@@ -167,9 +182,6 @@ function shuffle(list) {
   return [...list].sort(() => Math.random() - 0.5);
 }
 function buildSchedule() {
-  const falseJesus = guests.find((guest) =>
-    guest.name.toLowerCase().includes("false jesus"),
-  );
   const goodPool = shuffle(
     guests.filter((guest) => !guest.isAnomaly && !guest.instantDeath),
   );
@@ -178,34 +190,37 @@ function buildSchedule() {
   );
   const used = new Set();
   const configPlans = gameConfig.nights || [];
-  const plans = [
-    {
-      guestCount: configPlans[0]?.guestCount || 5,
-      anomalyMin: 1,
-      anomalyMax: 2,
-      jesusChance: 0,
-    },
-    {
-      guestCount: configPlans[1]?.guestCount || 6,
-      anomalyMin: 2,
-      anomalyMax: 3,
-      jesusChance: 0.15,
-    },
-    {
-      guestCount: configPlans[2]?.guestCount || 5,
-      anomalyMin: 3,
-      anomalyMax: 4,
-      jesusChance: 0.15,
-    },
+  const defaultPlans = [
+    { guestCount: 5, anomalyMin: 1, anomalyMax: 2 },
+    { guestCount: 6, anomalyMin: 3, anomalyMax: 4 },
+    { guestCount: 5, anomalyMin: 3, anomalyMax: 4 },
   ];
+  const plans = defaultPlans.map((defaultPlan, index) => {
+    const configPlan = configPlans[index] || {};
+    return {
+      guestCount: configPlan.guestCount ?? defaultPlan.guestCount,
+      anomalyMin: configPlan.anomalyCount?.min ?? defaultPlan.anomalyMin,
+      anomalyMax: configPlan.anomalyCount?.max ?? defaultPlan.anomalyMax,
+      deadlyChance: index === 0 ? 0 : 1,
+    };
+  });
   return plans.map((plan, nightIndex) => {
     const anomalyCount =
       Math.floor(Math.random() * (plan.anomalyMax - plan.anomalyMin + 1)) +
       plan.anomalyMin;
     const pickedAnomalies = [];
-    if (falseJesus && nightIndex > 0 && Math.random() < plan.jesusChance) {
-      pickedAnomalies.push(falseJesus);
-      used.add(falseJesus.characterId);
+    const deadlyPool = guests
+      .filter((guest) => guest.instantDeath && !used.has(guest.characterId))
+      .sort((a, b) => a.name.localeCompare(b.name));
+    if (
+      nightIndex > 0 &&
+      deadlyPool.length &&
+      Math.random() < plan.deadlyChance
+    ) {
+      const deadlyGuest =
+        deadlyPool[Math.floor(Math.random() * deadlyPool.length)];
+      pickedAnomalies.push(deadlyGuest);
+      used.add(deadlyGuest.characterId);
     }
     const availableAnomalies = anomalyPool.filter(
       (guest) => !used.has(guest.characterId),
@@ -247,16 +262,68 @@ async function loadGame() {
   intro();
 }
 function faceMarkup(guest) {
+  if (guest.special === "legion")
+    return `<span class="legion-stack"><img class="guest-image legion-image" src="${assetUrl("img/legion.png")}" alt="Legion" /></span>`;
+  if (guest.special === "belz")
+    return `<span class="belz-face"><img class="belz-closed" src="${assetUrl("img/belz_1.png")}" alt="Belz" /><img class="belz-open" src="${assetUrl("img/belz_2.png")}" alt="" aria-hidden="true" /></span>`;
   return guest.faceAsset
     ? `<img class="guest-image" src="${assetUrl(guest.faceAsset)}" alt="${escapeHtml(guest.name)}" />`
     : escapeHtml(guest.face);
+}
+function heartMarkup() {
+  const hasLostHalf = state.goodMistakes > 0;
+  const image = hasLostHalf ? "heart_half.svg" : "heart.svg";
+  const label = hasLostHalf ? "Half a heart remaining" : "One heart remaining";
+  return `<span class="life-heart" role="img" aria-label="${label}"><img src="${assetUrl(`img/${image}`)}" alt="" /></span>`;
+}
+function playLoseHeartSound() {
+  const audio = new Audio(assetUrl("audio/lose-heart.wav"));
+  audio.volume = 0.7;
+  audio.play().catch((error) => {
+    console.warn("Could not play the lose-heart sound.", error);
+  });
+}
+function penalizeGoodGuest(guest) {
+  state.goodMistakes += 1;
+  playLoseHeartSound();
+  if (state.goodMistakes >= 2) {
+    badEnding(
+      guest,
+      "You rejected or kicked out two genuine guests. Your last heart is gone.",
+    );
+    return true;
+  }
+  return false;
 }
 function soundMarkup(guest) {
   if (!guest.soundAsset) return "";
   const repeat = guest.repeatSound
     ? `<audio src="${assetUrl(guest.repeatSound)}" autoplay loop></audio>`
     : "";
-  return `<audio src="${assetUrl(guest.soundAsset)}" autoplay></audio>${repeat}`;
+  const legion = guest.special === "legion";
+  return `<audio${legion ? ' class="legion-audio" loop' : ""} src="${assetUrl(guest.soundAsset)}" autoplay></audio>${repeat}`;
+}
+function triggerLegionPanic() {
+  const stack = document.querySelector(".legion-stack");
+  const image = stack?.querySelector("img");
+  if (!stack || !image) return;
+
+  const duplicates = [];
+  const duplicateInterval = window.setInterval(() => {
+    const duplicate = image.cloneNode();
+    duplicate.alt = "";
+    duplicate.setAttribute("aria-hidden", "true");
+    duplicate.classList.add("legion-duplicate");
+    duplicate.style.setProperty("--offset-x", `${Math.random() * 180 - 90}px`);
+    duplicate.style.setProperty("--offset-y", `${Math.random() * 180 - 90}px`);
+    stack.append(duplicate);
+    duplicates.push(duplicate);
+  }, 100);
+
+  window.setTimeout(() => {
+    window.clearInterval(duplicateInterval);
+    duplicates.forEach((duplicate) => duplicate.remove());
+  }, 1500);
 }
 function intro() {
   render(
@@ -274,12 +341,22 @@ function showGuest() {
   const guest = state.schedule[state.night - 1][state.guestIndex];
   state.questions = 0;
   render(
-    `<section class="screen guest-screen"><header class="topbar"><span class="eyebrow">Cor Motel</span><span class="night">Night ${state.night} <span class="heart">♥</span></span></header><div class="sight-panel"><div class="section-label">What you see</div><div class="sight-content"><span class="eye">◉</span><span>${guest.sees.map(escapeHtml).join(" &nbsp; ") || "No details recorded"}</span></div></div><div class="guest-card"><div class="speech">${escapeHtml(guest.says)}</div><div class="face">${faceMarkup(guest)}</div>${guest.special !== "falseJesus" ? `<div class="guest-name">${escapeHtml(guest.name)}</div>` : ""}</div><div class="actions"><button id="details">Ask for details</button><button id="id">Ask for ID</button><div class="decision-row"><button class="accept" id="accept">Accept</button><button class="reject" id="reject">Reject</button></div></div><div class="feedback" id="feedback"></div>${soundMarkup(guest)}</section>`,
+    `<section class="screen guest-screen"><header class="topbar"><span class="eyebrow">Cor Motel</span><span class="night">Night ${state.night} ${heartMarkup()}</span></header><div class="sight-panel"><div class="section-label">What you see</div><div class="sight-content"><span class="eye">👁</span><span>${guest.sees.map(escapeHtml).join(" &nbsp; ") || "No details recorded"}</span></div></div><div class="guest-card"><div class="speech">${escapeHtml(guest.says)}</div><div class="face">${faceMarkup(guest)}</div>${guest.special !== "falseJesus" ? `<div class="guest-name">${escapeHtml(guest.name)}</div>` : ""}</div><div class="actions"><button id="details">Ask for details</button><button id="id">Ask for ID</button><div class="decision-row"><button class="accept" id="accept">Accept</button><button class="reject" id="reject">Reject</button></div></div><div class="feedback" id="feedback"></div>${soundMarkup(guest)}</section>`,
   );
   document.querySelector("#details").onclick = () => ask("details", guest);
   document.querySelector("#id").onclick = () => ask("ID", guest);
   document.querySelector("#accept").onclick = () => acceptGuest(guest);
-  document.querySelector("#reject").onclick = nextGuest;
+  document.querySelector("#reject").onclick = () => rejectGuest(guest);
+  if (guest.special === "legion") {
+    const audio = document.querySelector(".legion-audio");
+    if (audio) audio.volume = 0.2;
+    triggerLegionPanic();
+  }
+}
+function rejectGuest(guest) {
+  if (!guest.isAnomaly && !guest.instantDeath && penalizeGoodGuest(guest))
+    return;
+  nextGuest();
 }
 function ask(kind, guest) {
   if (state.questions >= 2) return;
@@ -293,9 +370,23 @@ function ask(kind, guest) {
   document.querySelector(kind === "ID" ? "#id" : "#details")?.remove();
 }
 function acceptGuest(guest) {
+  if (guest.special === "luci") return delayedLuciDeath(guest);
   if (guest.instantDeath) return badEnding(guest);
+  if (guest.special === "revelationDevil") return delayedDevilDeath(guest);
   state.admitted.push(guest);
   nextGuest();
+}
+function delayedLuciDeath(guest) {
+  render(
+    `<section class="screen guest-screen"><header class="topbar"><span class="eyebrow">Cor Motel</span><span class="night">Night ${state.night}</span></header><div class="guest-card"><div class="speech">${escapeHtml(guest.says)}</div><div class="face">${faceMarkup(guest)}</div><div class="guest-name">${escapeHtml(guest.name)}</div></div><p class="feedback">Guest accepted.</p></section>`,
+  );
+  window.setTimeout(() => badEnding(guest), 1500);
+}
+function delayedDevilDeath(guest) {
+  render(
+    `<section class="screen guest-screen devil-delay"><div class="guest-card"><div class="speech">${escapeHtml(guest.says)}</div><div class="face">${faceMarkup(guest)}</div><p>The visitor smiles.</p></div><p class="feedback">Guest accepted.</p></section>`,
+  );
+  window.setTimeout(() => badEnding(guest), 6000);
 }
 function nextGuest() {
   state.guestIndex++;
@@ -316,7 +407,7 @@ function monitor() {
     ? `<audio src="${assetUrl("audio/Four Voices Whispering Horror Film Sound Effects.mp3")}" autoplay loop></audio>`
     : "";
   render(
-    `<section class="screen monitor"><header class="topbar"><span class="eyebrow">Activity Monitor</span><span class="night">Night ${state.night}</span></header><div class="monitor-log">${logs}</div><div class="guest-list">${state.admitted.map((g) => `<div class="guest-row" id="row-${g.characterId}"><span>${escapeHtml(g.name)}</span><button class="kick danger" data-id="${g.characterId}">Kick</button></div>`).join("")}</div><button class="end-shift" id="end">Let the night pass</button>${belzAudio}</section>`,
+    `<section class="screen monitor"><header class="topbar"><span class="eyebrow">Activity Monitor</span><span class="night">Night ${state.night} ${heartMarkup()}</span></header><div class="monitor-log">${logs}</div><div class="guest-list">${state.admitted.map((g) => `<div class="guest-row" id="row-${g.characterId}"><span>${escapeHtml(g.name)}</span><button class="kick danger" data-id="${g.characterId}">Kick</button></div>`).join("")}</div><button class="end-shift" id="end">Let the night pass</button>${belzAudio}</section>`,
   );
   document
     .querySelectorAll(".kick")
@@ -324,8 +415,15 @@ function monitor() {
   document.querySelector("#end").onclick = endShift;
 }
 function kick(id) {
+  const guest = state.admitted.find(
+    (candidate) => candidate.characterId === id,
+  );
   document.querySelector(`#row-${id}`)?.remove();
   state.admitted = state.admitted.filter((g) => g.characterId !== id);
+  if (guest && !guest.isAnomaly && !guest.instantDeath) {
+    if (penalizeGoodGuest(guest)) return;
+    return monitor();
+  }
 }
 function endShift() {
   const dangerous = state.admitted.find(
@@ -339,25 +437,58 @@ function endShift() {
   introSecond();
 }
 function reset() {
+  document.body.classList.remove("phone-glitch-active");
   state = {
     night: 1,
     guestIndex: 0,
     admitted: [],
     questions: 0,
+    goodMistakes: 0,
     turnedAway: 0,
     wronglyKicked: 0,
   };
   state.schedule = buildSchedule();
   intro();
 }
-function badEnding(guest) {
-  const imageOption = Math.floor(Math.random() * 5) + 1;
+function badEnding(guest, reason = "You gave it a place in the motel.") {
+  const uniqueImages = {
+    luci: "img/revelation_devil_jumpscare.jpg",
+    revelationDevil: "img/revelation_devil_jumpscare.jpg",
+    falseProphet: "img/false_prophet_jumpscare.jpe",
+  };
   const audioOption = Math.floor(Math.random() * 3) + 1;
-  const image = `img/jumpscare_option${imageOption}.jpg`;
+  const image =
+    guest.special === "falseJesus"
+      ? null
+      : uniqueImages[guest.special] ||
+        `img/jumpscare_option${Math.floor(Math.random() * 5) + 1}.jpg`;
   const audio = `audio/jumpscare_option${audioOption}.mp3`;
-  render(
-    `<section class="screen jumpscare"><img class="jumpscare-image" src="${assetUrl(image)}" alt="Jumpscare" /><div class="jumpscare-content"><h1>${escapeHtml(guest.name)} was never a guest.</h1><p>You gave it a place in the motel.</p><p class="danger">HEART LOST — BAD ENDING</p><button class="continue" id="retry">Try again</button></div><audio src="${assetUrl(audio)}" autoplay></audio></section>`,
+  const title =
+    guest.special === "falseJesus"
+      ? "DISPLAY CORRUPTED"
+      : guest.special === "revelationDevil"
+        ? "It was never what it seemed."
+        : reason.includes("two genuine guests")
+          ? "Two genuine guests were turned away."
+          : `${guest.name || "The guest"} was never safe.`;
+  if (
+    guest.special === "falseJesus" &&
+    reason === "You gave it a place in the motel."
+  )
+    reason = "The image on your screen is no longer trustworthy.";
+  document.body.classList.toggle(
+    "phone-glitch-active",
+    guest.special === "falseJesus",
   );
+  render(
+    `<section class="screen jumpscare ${guest.special || "random-jumpscare"}"><div class="phone-glitch-overlay" aria-hidden="true"><span class="glitch-status">DISPLAY SIGNAL LOST</span><span class="glitch-tear glitch-tear-one"></span><span class="glitch-tear glitch-tear-two"></span><span class="glitch-fragment">0xF4 // IMAGE CORRUPTED</span></div>${image ? `<img class="jumpscare-image" src="${assetUrl(image)}" alt="Jumpscare" />` : ""}<div class="jumpscare-content"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(reason)}</p><p class="danger">HEART LOST — BAD ENDING</p><button class="continue" id="retry">Try again</button></div><audio src="${assetUrl(audio)}" autoplay></audio></section>`,
+  );
+  const jumpAudio = document.querySelector(".jumpscare audio");
+  if (jumpAudio) {
+    jumpAudio.volume = 1;
+    jumpAudio.play().catch(() => {});
+  }
+  if (navigator.vibrate) navigator.vibrate([180, 100, 260, 100, 500]);
   document.querySelector("#retry").onclick = reset;
 }
 function goodEnding() {

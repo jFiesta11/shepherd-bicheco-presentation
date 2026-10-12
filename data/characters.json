@@ -1,11 +1,11 @@
 {
   "gameConfig": {
     "lives": 1,
-    "failState": "Run ends with a jumpscare if (a) a bad guest is still inside when the night ends, or (b) a deadly guest is accepted. No hearts, one life only.",
+    "failState": "Run ends with a jumpscare if (a) a bad guest is still inside when the night ends, (b) a deadly guest is accepted, or (c) the player rejects or kicks out two genuine guests. One heart, one life.",
     "mistakeRules": {
-      "acceptBadGuest": "Not fatal yet. The guest stays in the monitor and can still be kicked before the night ends.",
-      "rejectGoodGuest": "No death. Motel loses revenue (counted as 'Turned away' on the results screen).",
-      "kickGoodGuest": "No death. Motel loses revenue and the guest is counted as 'Wrongly kicked'.",
+      "acceptBadGuest": "The guest stays in the monitor and can still be kicked before the night ends.",
+      "rejectGoodGuest": "Each genuine guest rejected costs half a heart. Rejecting two genuine guests ends the run.",
+      "kickGoodGuest": "Each genuine guest kicked costs half a heart. Kicking or rejecting two genuine guests in total ends the run.",
       "acceptDeadlyGuest": "Instant death with jumpscare. Cannot be kicked."
     },
     "nights": [
@@ -249,6 +249,181 @@
           "killsPlayer": false,
           "difficulty": 2,
           "note": "Walking the hallway at night can look suspicious, but he is safe. Teaches players not to kick based on one odd log line."
+        },
+        {
+          "id": "norm_7",
+          "name": "Prudencia",
+          "face": "( ◔ ᴗ ◔ )",
+          "sex": "Female",
+          "idInfo": {
+            "idName": "Prudencia Bautista",
+            "sex": "Female",
+            "hair": "Short Hair",
+            "skin": "Dark Skin",
+            "build": "Skinny",
+            "ageOnId": 39
+          },
+          "visible": ["Dark Skin", "Short Hair", "Skinny"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Good evening. Before I check in, may I see your guest book and where the fire exits are? I like to know where I'm sleeping.",
+            "askDetails": "I travel for work, so I check everything twice. Locks, exits, IDs. Yours too, if you don't mind.",
+            "askId": "Of course. Take your time. I'd be more worried if you didn't look closely."
+          },
+          "nightLog": [
+            "Prudencia checked the lock twice, then was asleep",
+            "Prudencia wrote down every exit in a notebook, then was asleep"
+          ],
+          "anomaly": { "isAnomaly": false, "tellType": "none", "tell": null },
+          "commandmentLink": {
+            "type": "virtue",
+            "name": "Prudence",
+            "meaning": "Testing everything before trusting it (1 John 4:1). This is the virtue the whole game asks of the player"
+          },
+          "ifAdmittedNotKicked": "none",
+          "killsPlayer": false,
+          "difficulty": 2,
+          "note": "Red herring. Her many questions and her interest in the exits can look like a thief casing the motel, but she is honest. She even asks you to check her ID closely."
+        },
+        {
+          "id": "norm_8",
+          "name": "Humberto",
+          "face": "( ◠ ◡ ◠ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Humberto Aquino",
+            "sex": "Male",
+            "hair": "Bald",
+            "skin": "Fair Skin",
+            "build": "Heavy",
+            "ageOnId": 63
+          },
+          "visible": ["Fair Skin", "Bald", "Heavy"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Good evening, sir. I'm afraid I can't pay the full rate tonight. I can fix a leaky tap or sweep your hallway in exchange, if you'll have me.",
+            "askDetails": "My bus was cancelled and my wallet is nearly empty. I only need a bed. I'll leave early so you can sell the room again.",
+            "askId": "Here. It's old and the corners are worn, but it's real."
+          },
+          "nightLog": [
+            "Humberto swept the hallway before bed",
+            "Humberto fixed a dripping tap in the bathroom, then was asleep"
+          ],
+          "anomaly": { "isAnomaly": false, "tellType": "none", "tell": null },
+          "commandmentLink": {
+            "type": "virtue",
+            "name": "Humility",
+            "meaning": "Serving instead of ruling, and welcoming the stranger. Valuing a person over profit (Matthew 25:35)"
+          },
+          "ifAdmittedNotKicked": "none",
+          "killsPlayer": false,
+          "difficulty": 1,
+          "note": "Tests the money theme. A player who rejects every guest who cannot pay in full protects revenue but turns away an honest man. He is truthful and harmless."
+        },
+        {
+          "id": "norm_9",
+          "name": "Verity",
+          "face": "( ◕ ᴗ ◕ )",
+          "sex": "Female",
+          "idInfo": {
+            "idName": "Verity Mendoza",
+            "sex": "Female",
+            "hair": "Long Hair",
+            "skin": "Light Skin",
+            "build": "Athletic",
+            "ageOnId": 26
+          },
+          "visible": ["Light Skin", "Short Hair", "Athletic"],
+          "idMatchesVisible": false,
+          "dialogue": {
+            "greeting": "Hello. Before you check my ID, I should warn you: I cut my hair last week. The card is out of date.",
+            "askDetails": "I donated it to a children's wig program. I'll update my ID next month. I'd rather tell you now than have you wonder.",
+            "askId": "There. Long hair on the card, short hair on me. Ask me anything else on it: my birthday, my address, my middle name."
+          },
+          "nightLog": [
+            "Verity left a note at the front desk about her out-of-date ID",
+            "Verity was asleep"
+          ],
+          "anomaly": { "isAnomaly": false, "tellType": "none", "tell": null },
+          "commandmentLink": {
+            "type": "virtue",
+            "name": "Truthfulness",
+            "meaning": "Telling the truth first, even when it makes you look suspicious (Ephesians 4:25)"
+          },
+          "ifAdmittedNotKicked": "none",
+          "killsPlayer": false,
+          "difficulty": 3,
+          "note": "Looks like Belli, because the ID and the guest disagree on hair. Verity volunteers the mismatch before she is asked, explains it and invites more questions. Belli hides it. idMatchesVisible is false here, but Verity is NOT an anomaly: use anomaly.isAnomaly, not idMatchesVisible, to decide who is truly bad."
+        },
+        {
+          "id": "norm_10",
+          "name": "Stewart",
+          "face": "( ◉ ‿ ◉ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Stewart Gonzales",
+            "sex": "Male",
+            "hair": "Short Hair",
+            "skin": "Dark Skin",
+            "build": "Average",
+            "ageOnId": 47
+          },
+          "visible": ["Dark Skin", "Short Hair", "Average"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Good evening. One room, please. I'll pay the full rate, and I'll need a receipt. Everything on paper, please.",
+            "askDetails": "I'm an accountant. I like a clean record. I'll also leave a little extra for the cleaner. Honest work should be paid for.",
+            "askId": "Here, along with my business card. Write it all down. I'd rather you keep records."
+          },
+          "nightLog": [
+            "Stewart left an envelope at the front desk for the next guest in need",
+            "Stewart reviewed his receipts, then was asleep"
+          ],
+          "anomaly": { "isAnomaly": false, "tellType": "none", "tell": null },
+          "commandmentLink": {
+            "type": "virtue",
+            "name": "Stewardship",
+            "meaning": "Money as a servant, not a master. Using it honestly and generously instead of worshipping it. You cannot serve both God and money (Luke 16:13)"
+          },
+          "ifAdmittedNotKicked": "none",
+          "killsPlayer": false,
+          "difficulty": 2,
+          "note": "Red herring for the money theme. He talks about money first, like Amon, but he insists on paperwork, pays in full and gives some away. Amon skips paperwork and offers bribes."
+        },
+        {
+          "id": "norm_11",
+          "name": "Ana",
+          "face": "( ˘ ᴗ ˘ )",
+          "sex": "Female",
+          "idInfo": {
+            "idName": "Ana Pascual",
+            "sex": "Female",
+            "hair": "Long Hair",
+            "skin": "Tan Skin",
+            "build": "Skinny",
+            "ageOnId": 71
+          },
+          "visible": ["Tan Skin", "Long Hair", "Skinny"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Good evening, anak. A small room, please. I won't need the lights. I'll be up late, praying.",
+            "askDetails": "I stay awake on this night every year, praying for my family. Don't worry about me, I won't disturb anyone.",
+            "askId": "Here, anak. I've had it since before you were born, I think."
+          },
+          "nightLog": [
+            "Ana stayed awake all night praying by the window",
+            "Ana never slept. She kept vigil until morning"
+          ],
+          "anomaly": { "isAnomaly": false, "tellType": "none", "tell": null },
+          "commandmentLink": {
+            "type": "virtue",
+            "name": "Devotion",
+            "meaning": "Giving God your time and attention, not your image or your money. Watching and praying (Mark 14:38, Luke 2:37)"
+          },
+          "ifAdmittedNotKicked": "none",
+          "killsPlayer": false,
+          "difficulty": 3,
+          "note": "Red herring for Lilli. Both stay awake all night, but Ana is praying. Players have to read the whole log and her dialogue, not react to one keyword."
         }
       ]
     },
@@ -490,6 +665,247 @@
           "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends. Motel also loses money",
           "killsPlayer": false,
           "difficulty": 1
+        },
+        {
+          "id": "anoma_7",
+          "name": "Behe",
+          "face": "( ◕ ▽ ◕ )",
+          "sex": "Female",
+          "idInfo": {
+            "idName": "Behe Moth",
+            "sex": "Female",
+            "hair": "Long Hair",
+            "skin": "Fair Skin",
+            "build": "Average",
+            "ageOnId": 36
+          },
+          "visible": ["Fair Skin", "Long Hair", "Average"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Hi! I'll take the biggest room you have. And a second room next door, for my things.",
+            "askDetails": "I like to have more than I need. More towels, more food, more rooms. Is there a limit? There shouldn't be.",
+            "askId": "It's all there. Now, what else do you have? Is there something bigger upstairs?"
+          },
+          "nightLog": [
+            "Behe emptied the minibar and the vending machine",
+            "Behe demanded a third room and was still not satisfied"
+          ],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "dialogue",
+            "tell": "Never satisfied. Asks for more rooms, more food and more of everything, and keeps asking even after she gets it. Easy to catch once you notice she is never content with any answer.",
+            "disguise": "Cheerful and bubbly, with plenty of compliments."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "Excess (Never Enough)",
+            "meaning": "Making 'more' your god. Whoever loves money never has enough (Ecclesiastes 5:10)"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends. Motel also loses money",
+          "killsPlayer": false,
+          "difficulty": 1
+        },
+        {
+          "id": "anoma_8",
+          "name": "Mephi",
+          "face": "( ¬ ‿ ¬ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Mephi Stopheles",
+            "sex": "Male",
+            "hair": "Short Hair",
+            "skin": "Light Skin",
+            "build": "Average",
+            "ageOnId": 44
+          },
+          "visible": ["Light Skin", "Short Hair", "Skinny"],
+          "idMatchesVisible": false,
+          "dialogue": {
+            "greeting": "Good evening. Here is a complimentary welcome form. Sign at the bottom and the room is free tonight. No need to read it. It's all standard.",
+            "askDetails": "It's a small agreement. A free room tonight, and you owe me one favor later. Everyone signs. It's very ordinary.",
+            "askId": "Everything is in order. You really don't need to look so closely, my friend."
+          },
+          "nightLog": [
+            "Mephi slipped a contract under every guest's door",
+            "Mephi collected signatures from guests who did not read the page"
+          ],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "idMismatch",
+            "tell": "The ID says Average build but he visibly looks Skinny. It is a subtle mismatch, and he tries to rush you past it with a 'free' form he wants signed unread. Mirrors loan traps and hidden fine print.",
+            "disguise": "Polished and professional, generous with 'free' offers."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "The Bargain (Deceit)",
+            "meaning": "Giving yourself away for a 'free' offer without reading the cost. Hidden fine print and debt traps are the modern version. What good is it to gain the whole world and lose your soul? (Mark 8:36)"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends",
+          "killsPlayer": false,
+          "difficulty": 2
+        },
+        {
+          "id": "anoma_9",
+          "name": "Baal",
+          "face": "( ◉ ▽ ◉ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Baal Peor",
+            "sex": "Male",
+            "hair": "Long Hair",
+            "skin": "Dark Skin",
+            "build": "Skinny",
+            "ageOnId": 40
+          },
+          "visible": ["Dark Skin", "Long Hair", "Skinny"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Good evening. I travel with my patron. He needs the finest room, and I need the one right beside it.",
+            "askDetails": "My patron is small, golden and very demanding. I bring him an offering every night. He has made me everything I am.",
+            "askId": "My patron says I don't need to show you. But since you insist, here. He is watching, you know."
+          },
+          "nightLog": [
+            "Baal set a small golden calf on the dresser and bowed to it all night",
+            "Baal asked another guest to bow down too"
+          ],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "glitch",
+            "tell": "The 'What you see' text flashes gold for a split second whenever he mentions his patron. He travels with a golden calf that needs its own room, and his night log shows him bowing to it.",
+            "disguise": "A devout, soft-spoken traveler who sounds religious."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "False Gods (The Golden Calf)",
+            "meaning": "Worshipping something made instead of the one who made you. The golden calf of Exodus 32 is the exact sin the Second Commandment forbids (Exodus 20:4-5)"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends",
+          "killsPlayer": false,
+          "difficulty": 2
+        },
+        {
+          "id": "anoma_10",
+          "name": "Molo",
+          "face": "( ◔ ‿ ◔ )",
+          "sex": "Female",
+          "idInfo": {
+            "idName": "Molo Ch",
+            "sex": "Female",
+            "hair": "Short Hair",
+            "skin": "Tan Skin",
+            "build": "Average",
+            "ageOnId": 42
+          },
+          "visible": ["Tan Skin", "Short Hair", "Average"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Evening. I just need a desk and a plug. I'll be on calls most of the night, so don't worry about the bed.",
+            "askDetails": "Big deal closing tomorrow. Months of work. It will all be worth it. It has to be.",
+            "askId": "Here. Quickly, please. Time is money, and I'm already behind."
+          },
+          "nightLog": [
+            "Molo made call after call and never lay down",
+            "Molo ignored three calls from her family: 'Not now, I'm closing a deal'",
+            "Molo never ate or slept"
+          ],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "nightLog",
+            "tell": "Sounds like a tired, hardworking professional, so she passes for a good guest. Only the night log shows what she is sacrificing for success. Modern burnout is the same as the old offering to Moloch.",
+            "disguise": "A dedicated, hardworking professional who deserves sympathy."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "Success (The Sacrifice)",
+            "meaning": "Sacrificing family, rest and health for the sake of success. Moloch was the god who demanded sacrifices, and the modern version is burnout and neglect for profit. Seek first God's kingdom (Matthew 6:33)"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends",
+          "killsPlayer": false,
+          "difficulty": 3
+        },
+        {
+          "id": "anoma_11",
+          "name": "Legion",
+          "specialEffect": {
+            "onGreeting": "echoPreviousGuestGreeting",
+            "onAskDetails": "echoPreviousGuestAskDetails",
+            "placement": "neverFirstGuest",
+            "note": "Repeats the previous guest's lines word for word. If Legion were the first guest there would be nothing to echo, so the game must never place her first. She only gives her own answer when asked for ID. The lines below are the fallback if the echo cannot run."
+          },
+          "face": "( ◕ ‿ ◕ )( ◕ ‿ ◕ )",
+          "sex": "Female",
+          "idInfo": {
+            "idName": "Legi Onn",
+            "sex": "Female",
+            "hair": "Long Hair",
+            "skin": "Light Skin",
+            "build": "Athletic",
+            "ageOnId": 28
+          },
+          "visible": ["Light Skin", "Long Hair", "Athletic"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Good evening. A room, please. Whatever the last guest had is fine for me.",
+            "askDetails": "I'm just like everyone else. I want what everyone wants. I do what everyone does. Isn't that enough?",
+            "askId": "My name is Legi Onn. We are... I mean, I am. Just one person. Just me."
+          },
+          "nightLog": [
+            "Legion repeated every conversation she heard through the walls",
+            "Legion changed her story each time another guest spoke to her"
+          ],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "dialogue",
+            "tell": "Repeats the previous guest's greeting almost word for word, and her ID answer slips from 'we' to 'I'. She has no opinion of her own.",
+            "disguise": "Agreeable, friendly and easy to get along with."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "The Crowd (Conformity)",
+            "meaning": "Putting what everyone else thinks and does before God. 'My name is Legion, for we are many' (Mark 5:9). Do not follow the crowd in doing wrong (Exodus 23:2)"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends",
+          "killsPlayer": false,
+          "difficulty": 3
+        },
+        {
+          "id": "anoma_12",
+          "name": "Lupo",
+          "face": "( ᵔ ‿ ᵔ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Brother Lupo Jonah",
+            "sex": "Male",
+            "hair": "Short Hair",
+            "skin": "Fair Skin",
+            "build": "Average",
+            "ageOnId": 57
+          },
+          "visible": ["Fair Skin", "Short Hair", "Average"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Peace, friend. I'm a servant of God on my way to a revival. Surely a fellow believer wouldn't turn a man of God away on a cold night?",
+            "askDetails": "As the Good Book says, God helps those who help themselves. Help me tonight, and I'll pray over your motel. A small seed offering would multiply your blessings, of course.",
+            "askId": "My name is written in heaven, friend. This card is only paper. But here, if you must."
+          },
+          "nightLog": [
+            "Brother Lupo went door to door collecting 'seed offerings' from the other guests",
+            "Brother Lupo preached outside the rooms and asked every guest for money"
+          ],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "dialogue",
+            "tell": "Quotes 'God helps those who help themselves' as if it were scripture. It is not in the Bible. He also asks for a 'seed offering' and uses his faith to pressure you. Scripture warns about wolves in sheep's clothing (Matthew 7:15) and about teachers who exploit people through greed (2 Peter 2:3).",
+            "disguise": "A gentle, friendly pastor who flatters the player's faith."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "False Prophet",
+            "meaning": "Someone who uses God's name to serve himself and his wallet. A wolf in sheep's clothing (Matthew 7:15)"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends. Motel also loses money",
+          "killsPlayer": false,
+          "difficulty": 2
         }
       ]
     },
@@ -497,7 +913,7 @@
       "instaDeathAnomaly": [
         {
           "id": "kill_1",
-          "name": "False Jesus",
+          "name": "Jesus",
           "face": "( ✧ ‿ ✧ )",
           "sex": "Male",
           "idInfo": {
@@ -534,7 +950,7 @@
         },
         {
           "id": "kill_2",
-          "name": "Revelation of the Devil",
+          "name": "Luci",
           "face": "( ◕ ‿ ◕ )",
           "sex": "Male",
           "idInfo": {
