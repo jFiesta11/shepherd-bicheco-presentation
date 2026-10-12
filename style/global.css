@@ -42,6 +42,58 @@ button {
   display: grid;
   place-items: center;
 }
+.loading-screen {
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+.loading-mark {
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  border: 1px solid #d7d284;
+  border-radius: 50%;
+  color: #d7d284;
+  font-size: 2rem;
+  animation: loadingPulse 1.6s ease-in-out infinite;
+}
+.loading-screen h1,
+.loading-screen p {
+  margin: 0;
+}
+.loading-screen h1 {
+  font-size: clamp(1.35rem, 5vw, 2rem);
+}
+.loading-screen > .eyebrow {
+  font-size: 0.8rem;
+}
+.loading-screen [role="status"],
+.loading-count {
+  color: #aeb7aa;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.loading-screen progress {
+  width: min(100%, 22rem);
+  height: 0.75rem;
+  accent-color: #d7d284;
+}
+.loading-screen button {
+  min-height: 2.75rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid #d7d284;
+  background: transparent;
+  color: #e8e9cd;
+}
+@keyframes loadingPulse {
+  50% {
+    opacity: 0.55;
+    transform: scale(0.92);
+  }
+}
 .screen {
   width: min(100%, 32rem);
   min-height: 100vh;
@@ -457,6 +509,9 @@ button:disabled {
   opacity: 1;
   animation: phoneTextGlitch 2.8s steps(1, end) both;
 }
+.falseJesus .jumpscare-image {
+  z-index: 2;
+}
 .phone-glitch-overlay {
   position: fixed;
   inset: 0;
@@ -840,6 +895,7 @@ body.phone-glitch-active #app {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .loading-mark,
   body.phone-glitch-active #app,
   body.phone-glitch-active::before,
   body.phone-glitch-active::after,

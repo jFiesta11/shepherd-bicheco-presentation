@@ -1,8 +1,47 @@
 const app = document.querySelector("#app");
 const DATA_URL = "./data/characters.json";
 const ASSET = "./assets/";
+const ASSET_PATHS = [
+  "img/aba.jpg",
+  "img/belz_1.png",
+  "img/belz_2.png",
+  "img/false_jesus_jumpscare.jpg",
+  "img/false_prophet_jumpscare.jpe",
+  "img/heart.svg",
+  "img/heart_half.svg",
+  "img/jesus_at_the_door.jpeg",
+  "img/jumpscare_option1.jpg",
+  "img/jumpscare_option2.jpg",
+  "img/jumpscare_option3.jpg",
+  "img/jumpscare_option4.jpg",
+  "img/jumpscare_option5.jpg",
+  "img/legion.png",
+  "img/lilli.jpg",
+  "img/revelation_devil_jumpscare.jpg",
+  "audio/aba.wav",
+  "audio/amon.wav",
+  "audio/belz_dialogue.mp3",
+  "audio/Four Voices Whispering Horror Film Sound Effects.mp3",
+  "audio/jumpscare_option1.mp3",
+  "audio/jumpscare_option2.mp3",
+  "audio/jumpscare_option3.mp3",
+  "audio/legion_hello.wav",
+  "audio/lilli-repeat.wav",
+  "audio/lilli.wav",
+  "audio/lose-heart.wav",
+  "audio/UI_accept.wav",
+  "audio/UI_click.wav",
+  "audio/UI_reject.wav",
+];
+const loadedAssets = new Map();
 const assetUrl = (path) =>
+  loadedAssets.get(path) ||
   `${ASSET}${path.split("/").map(encodeURIComponent).join("/")}`;
+const loadingStatus = document.querySelector("#loading-status");
+const loadingProgress = document.querySelector("#asset-progress");
+const loadingCount = document.querySelector("#loading-count");
+const retryAssetsButton = document.querySelector("#retry-assets");
+const MAX_ASSET_LOADS = 4;
 const uiSounds = {
   click: "audio/UI_click.wav",
   accept: "audio/UI_accept.wav",
@@ -64,6 +103,70 @@ const fallbackGuests = [
 const render = (html) => {
   app.innerHTML = html;
 };
+function updateAssetProgress() {
+  loadingProgress.value = loadedAssets.size;
+  loadingCount.textContent = `${loadedAssets.size} of ${ASSET_PATHS.length} assets ready`;
+}
+async function loadAsset(path) {
+  const response = await fetch(assetUrl(path));
+  if (!response.ok)
+    throw new Error(`${path}: server returned ${response.status}`);
+  const blob = await response.blob();
+  if (!blob.size) throw new Error(`${path}: downloaded file is empty`);
+  const url = URL.createObjectURL(blob);
+
+  try {
+    if (path.startsWith("img/")) {
+      const image = new Image();
+      image.src = url;
+      await image.decode();
+    }
+    loadedAssets.set(path, url);
+  } catch (error) {
+    URL.revokeObjectURL(url);
+    throw error;
+  }
+}
+async function preloadAssets() {
+  app.setAttribute("aria-busy", "true");
+  retryAssetsButton.hidden = true;
+  retryAssetsButton.disabled = true;
+  loadingStatus.textContent = "Loading and checking every image and sound…";
+  updateAssetProgress();
+
+  const pending = ASSET_PATHS.filter((path) => !loadedAssets.has(path));
+  const failures = [];
+  let nextIndex = 0;
+  async function loadNext() {
+    while (nextIndex < pending.length) {
+      const path = pending[nextIndex++];
+      try {
+        await loadAsset(path);
+        updateAssetProgress();
+      } catch (error) {
+        console.error("Could not preload game asset.", error);
+        failures.push(path);
+      }
+    }
+  }
+  await Promise.all(
+    Array.from(
+      { length: Math.min(MAX_ASSET_LOADS, pending.length) },
+      loadNext,
+    ),
+  );
+
+  if (failures.length) {
+    app.setAttribute("aria-busy", "false");
+    loadingStatus.textContent = `Could not load ${failures.length} asset${failures.length === 1 ? "" : "s"}: ${failures.join(", ")}`;
+    retryAssetsButton.hidden = false;
+    retryAssetsButton.disabled = false;
+    return false;
+  }
+  loadingStatus.textContent = "Everything is ready.";
+  app.setAttribute("aria-busy", "false");
+  return true;
+}
 function playUiSound(type = "click") {
   const audio = new Audio(assetUrl(uiSounds[type] || uiSounds.click));
   audio.volume = type === "click" ? 0.45 : 0.65;
@@ -264,18 +367,18 @@ async function loadGame() {
 function faceMarkup(guest) {
   const jesusClass = /jesus/i.test(guest.name || "") ? " jesus-image" : "";
   if (guest.special === "legion")
-    return `<span class="legion-stack"><img class="guest-image legion-image" src="${assetUrl("img/legion.png")}" alt="Legion" /></span>`;
+    return `<span class="legion-stack"><img class="guest-image legion-image" src="${assetUrl("img/legion.png")}" alt="Legion" decoding="async" fetchpriority="high" /></span>`;
   if (guest.special === "belz")
-    return `<span class="belz-face"><img class="belz-closed" src="${assetUrl("img/belz_1.png")}" alt="Belz" /><img class="belz-open" src="${assetUrl("img/belz_2.png")}" alt="" aria-hidden="true" /></span>`;
+    return `<span class="belz-face"><img class="belz-closed" src="${assetUrl("img/belz_1.png")}" alt="Belz" decoding="async" fetchpriority="high" /><img class="belz-open" src="${assetUrl("img/belz_2.png")}" alt="" aria-hidden="true" decoding="async" /></span>`;
   return guest.faceAsset
-    ? `<img class="guest-image${jesusClass}" src="${assetUrl(guest.faceAsset)}" alt="${escapeHtml(guest.name)}" />`
+    ? `<img class="guest-image${jesusClass}" src="${assetUrl(guest.faceAsset)}" alt="${escapeHtml(guest.name)}" decoding="async" fetchpriority="high" />`
     : escapeHtml(guest.face);
 }
 function heartMarkup() {
   const hasLostHalf = state.goodMistakes > 0;
   const image = hasLostHalf ? "heart_half.svg" : "heart.svg";
   const label = hasLostHalf ? "Half a heart remaining" : "One heart remaining";
-  return `<span class="life-heart" role="img" aria-label="${label}"><img src="${assetUrl(`img/${image}`)}" alt="" /></span>`;
+  return `<span class="life-heart" role="img" aria-label="${label}"><img src="${assetUrl(`img/${image}`)}" alt="" decoding="async" /></span>`;
 }
 function playLoseHeartSound() {
   const audio = new Audio(assetUrl("audio/lose-heart.wav"));
@@ -453,16 +556,15 @@ function reset() {
 }
 function badEnding(guest, reason = "You gave it a place in the motel.") {
   const uniqueImages = {
+    falseJesus: "img/false_jesus_jumpscare.jpg",
     luci: "img/revelation_devil_jumpscare.jpg",
     revelationDevil: "img/revelation_devil_jumpscare.jpg",
     falseProphet: "img/false_prophet_jumpscare.jpe",
   };
   const audioOption = Math.floor(Math.random() * 3) + 1;
   const image =
-    guest.special === "falseJesus"
-      ? null
-      : uniqueImages[guest.special] ||
-        `img/jumpscare_option${Math.floor(Math.random() * 5) + 1}.jpg`;
+    uniqueImages[guest.special] ||
+    `img/jumpscare_option${Math.floor(Math.random() * 5) + 1}.jpg`;
   const audio = `audio/jumpscare_option${audioOption}.mp3`;
   const title =
     guest.special === "falseJesus"
@@ -482,7 +584,7 @@ function badEnding(guest, reason = "You gave it a place in the motel.") {
     guest.special === "falseJesus",
   );
   render(
-    `<section class="screen jumpscare ${guest.special || "random-jumpscare"}"><div class="phone-glitch-overlay" aria-hidden="true"><span class="glitch-status">DISPLAY SIGNAL LOST</span><span class="glitch-tear glitch-tear-one"></span><span class="glitch-tear glitch-tear-two"></span><span class="glitch-fragment">0xF4 // IMAGE CORRUPTED</span></div>${image ? `<img class="jumpscare-image" src="${assetUrl(image)}" alt="Jumpscare" />` : ""}<div class="jumpscare-content"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(reason)}</p><p class="danger">HEART LOST — BAD ENDING</p><button class="continue" id="retry">Try again</button></div><audio src="${assetUrl(audio)}" autoplay></audio></section>`,
+    `<section class="screen jumpscare ${guest.special || "random-jumpscare"}"><div class="phone-glitch-overlay" aria-hidden="true"><span class="glitch-status">DISPLAY SIGNAL LOST</span><span class="glitch-tear glitch-tear-one"></span><span class="glitch-tear glitch-tear-two"></span><span class="glitch-fragment">0xF4 // IMAGE CORRUPTED</span></div>${image ? `<img class="jumpscare-image" src="${assetUrl(image)}" alt="Jumpscare" decoding="async" fetchpriority="high" />` : ""}<div class="jumpscare-content"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(reason)}</p><p class="danger">HEART LOST — BAD ENDING</p><button class="continue" id="retry">Try again</button></div><audio src="${assetUrl(audio)}" autoplay></audio></section>`,
   );
   const jumpAudio = document.querySelector(".jumpscare audio");
   if (jumpAudio) {
@@ -498,4 +600,8 @@ function goodEnding() {
   );
   document.querySelector("#again").onclick = reset;
 }
-loadGame();
+async function startGameWhenReady() {
+  if (await preloadAssets()) await loadGame();
+}
+retryAssetsButton.addEventListener("click", startGameWhenReady);
+startGameWhenReady();
