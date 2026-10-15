@@ -99,10 +99,8 @@ button {
   min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
-  padding:
-    max(1rem, env(safe-area-inset-top))
-    max(1rem, env(safe-area-inset-right))
-    max(1rem, env(safe-area-inset-bottom))
+  padding: max(1rem, env(safe-area-inset-top))
+    max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom))
     max(1rem, env(safe-area-inset-left));
   display: flex;
   flex-direction: column;
@@ -124,18 +122,19 @@ button {
 .intro-bubble {
   background: #4a4c57;
   color: white;
-  padding: 9px 11px;
-  border-radius: 2px;
-  font-size: 11px;
+  padding: 20px 31px;
+  border-radius: 5px;
+  font-size: 20px;
   position: absolute;
-  top: 22px;
-  right: 8px;
+  top: 10px;
+  right: 10px;
 }
 .intro-face {
   font-size: 25px;
 }
 .intro-caption {
-  font-size: 11px;
+  font-size: 21px;
+  font-style: italic;
   color: #64645a;
 }
 .continue {
@@ -349,7 +348,7 @@ button:disabled {
   align-items: center;
   position: fixed;
   inset: 0;
-  z-index: 2;
+  z-index: 1000;
   width: 100%;
   max-width: none;
   height: 100vh;
@@ -484,7 +483,7 @@ button:disabled {
 .jumpscare-image {
   position: fixed;
   inset: 0;
-  z-index: 5;
+  z-index: 100;
   width: 100vw;
   height: 100vh;
   width: 100dvw;
@@ -510,12 +509,12 @@ button:disabled {
   animation: phoneTextGlitch 2.8s steps(1, end) both;
 }
 .falseJesus .jumpscare-image {
-  z-index: 2;
+  z-index: 100;
 }
 .phone-glitch-overlay {
   position: fixed;
   inset: 0;
-  z-index: 3;
+  z-index: 90;
   overflow: hidden;
   color: #c8ffff;
   font:
@@ -615,18 +614,39 @@ body.phone-glitch-active #app {
   display: inline-block;
 }
 .legion-duplicate {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  z-index: 4;
+  top: var(--top);
+  left: var(--left);
+  width: clamp(5rem, 18vw, 8rem);
+  height: auto;
   max-width: none;
   max-height: none;
   object-fit: contain;
-  opacity: 0.8;
-  transform: translate(var(--offset-x), var(--offset-y));
+  opacity: 0.68;
+  transform: translate(-50%, -50%);
   filter: brightness(1.5) contrast(1.5) hue-rotate(120deg);
   pointer-events: none;
+}
+.legion-panic #reject {
+  position: relative;
+  z-index: 3;
+  animation: legionRejectJitter 0.18s steps(2, end) infinite;
+}
+@keyframes legionRejectJitter {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+  25% {
+    transform: translate(4px, -2px) rotate(2deg);
+  }
+  50% {
+    transform: translate(-5px, 1px) rotate(-2deg);
+  }
+  75% {
+    transform: translate(2px, 3px) rotate(1deg);
+  }
 }
 .belz-face {
   position: relative;
@@ -876,14 +896,6 @@ body.phone-glitch-active #app {
       3px 0 #31e7ff;
   }
 }
-@keyframes jumpscareFade {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
 @keyframes messageReveal {
   from {
     opacity: 0;
@@ -894,8 +906,17 @@ body.phone-glitch-active #app {
     transform: translateY(0);
   }
 }
+@keyframes jumpscareFade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .loading-mark,
+  .legion-panic #reject,
   body.phone-glitch-active #app,
   body.phone-glitch-active::before,
   body.phone-glitch-active::after,

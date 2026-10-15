@@ -167,7 +167,7 @@
             "askId": "Here, and my hospital badge too, if that helps."
           },
           "nightLog": [
-            "Mercy was checking on the other guests",
+            "Mercy was worried for the other guests",
             "Mercy was asleep"
           ],
           "anomaly": { "isAnomaly": false, "tellType": "none", "tell": null },
@@ -451,9 +451,9 @@
           "visible": ["Tan Skin", "Long Hair", "Skinny"],
           "idMatchesVisible": true,
           "dialogue": {
-            "greeting": "I am a regular here :)",
-            "askDetails": "You should know me. Everyone knows me. This place is practically mine.",
-            "askId": "Do you really need to check? Fine."
+            "greeting": "Evening. I believe I've stayed here before, though the hours blur together.",
+            "askDetails": "The usual room, if it is still free. I tend to remember places by their feel, not their names.",
+            "askId": "Of course. I only thought the staff might recognize me by now."
           },
           "nightLog": ["Belz never entered the room"],
           "anomaly": {
@@ -487,9 +487,9 @@
           "visible": ["Fair Skin", "Long Hair", "Average"],
           "idMatchesVisible": false,
           "dialogue": {
-            "greeting": "Room, please. And no questions. I make my own rules.",
-            "askDetails": "I go where I want and stay as long as I want. Is that a problem?",
-            "askId": "It's me. The card is old, that's all."
+            "greeting": "A room, please. I have had a long day, so I would appreciate a quick check-in.",
+            "askDetails": "I travel light and keep to myself. If something needs arranging, tell me plainly and I will handle it.",
+            "askId": "It is still me. The card has seen better days, but the important details should be clear."
           },
           "nightLog": [
             "Belli was rearranging the furniture",
@@ -526,9 +526,9 @@
           "visible": ["Dark Skin", "Short Hair", "Muscular"],
           "idMatchesVisible": true,
           "dialogue": {
-            "greeting": "I need a room. A strong one. With thick walls.",
-            "askDetails": "First time here. Though I do know which room is the sturdiest, the one at the end.",
-            "askId": "Take it. It's real enough."
+            "greeting": "I need a quiet room tonight, somewhere built solid enough that the noise stays outside.",
+            "askDetails": "It is my first stay, unless I have mistaken this place for another. The far room looks like it would suit me.",
+            "askId": "There you are. I have never been fond of paperwork, but it is all in order."
           },
           "nightLog": [
             "Aba was pounding on the walls",
@@ -565,9 +565,9 @@
           "visible": ["Fair Skin", "Long Hair", "Skinny"],
           "idMatchesVisible": true,
           "dialogue": {
-            "greeting": "Hi! Is there a mirror in the room? I'll need a big one. Do I look okay?",
-            "askDetails": "I'm only here for the mirrors. I need the perfect reflection.",
-            "askId": "Don't read too closely. I look much better in person."
+            "greeting": "Hi! Does the room have a mirror? I like to make a good impression after traveling.",
+            "askDetails": "A decent mirror would be lovely. Harsh lighting can make anyone look tired, don't you think?",
+            "askId": "Here you are. The photograph is unkind, but I promise I look more like myself in person."
           },
           "nightLog": [
             "Lilli stood at the mirror all night",
@@ -604,9 +604,9 @@
           "visible": ["Light Skin", "Short Hair", "Average"],
           "idMatchesVisible": true,
           "dialogue": {
-            "greeting": "Room for one. Which room did the last guest get? The nicer one, I bet.",
-            "askDetails": "I just want what the others have. Nothing more. Nothing less.",
-            "askId": "Here. Who else checked in tonight?"
+            "greeting": "A room for one, please. I hope I have not arrived after all the quiet rooms were taken.",
+            "askDetails": "I am easy to please. Just give me something comparable to what the other guests received.",
+            "askId": "Certainly. And forgive my curiosity—has the motel been busy this evening?"
           },
           "nightLog": [
             "Levi was standing outside another guest's door",
@@ -643,9 +643,9 @@
           "visible": ["Tan Skin", "Short Hair", "Average"],
           "idMatchesVisible": true,
           "dialogue": {
-            "greeting": "Good evening! I'll pay double. Triple, if you skip the paperwork.",
-            "askDetails": "Money is no problem. Name your price. Everyone has one, don't they?",
-            "askId": "Do we really need that? I can make it worth your while."
+            "greeting": "Good evening. I am happy to cover the usual rate, and a little extra for any inconvenience.",
+            "askDetails": "I have had a fortunate year. If a rule causes trouble, perhaps there is a practical way to make the trouble disappear.",
+            "askId": "Surely the reservation is enough, but I understand. Let us keep this quick for both of us."
           },
           "nightLog": [
             "Amon was counting money all night",
@@ -682,9 +682,9 @@
           "visible": ["Fair Skin", "Long Hair", "Average"],
           "idMatchesVisible": true,
           "dialogue": {
-            "greeting": "Hi! I'll take the biggest room you have. And a second room next door, for my things.",
-            "askDetails": "I like to have more than I need. More towels, more food, more rooms. Is there a limit? There shouldn't be.",
-            "askId": "It's all there. Now, what else do you have? Is there something bigger upstairs?"
+            "greeting": "Hi! I would love the largest room available, if it is not too much trouble. My luggage takes up space.",
+            "askDetails": "Could I have a few extra towels and perhaps a little more food? I sleep better when I am prepared for every possibility.",
+            "askId": "It should answer everything. While you have it, do you know whether there is a larger room upstairs?"
           },
           "nightLog": [
             "Behe emptied the minibar and the vending machine",
@@ -721,9 +721,9 @@
           "visible": ["Light Skin", "Short Hair", "Skinny"],
           "idMatchesVisible": false,
           "dialogue": {
-            "greeting": "Good evening. Here is a complimentary welcome form. Sign at the bottom and the room is free tonight. No need to read it. It's all standard.",
-            "askDetails": "It's a small agreement. A free room tonight, and you owe me one favor later. Everyone signs. It's very ordinary.",
-            "askId": "Everything is in order. You really don't need to look so closely, my friend."
+            "greeting": "Good evening. The motel is offering a welcome arrangement tonight; it only needs your signature before I check in.",
+            "askDetails": "It is a modest exchange: a complimentary room now, with a small favor to be discussed later. Nothing unusual in business.",
+            "askId": "There should be no difficulty with it. Take a look, by all means, though the print is rather cramped."
           },
           "nightLog": [
             "Mephi slipped a contract under every guest's door",
@@ -760,9 +760,9 @@
           "visible": ["Dark Skin", "Long Hair", "Skinny"],
           "idMatchesVisible": true,
           "dialogue": {
-            "greeting": "Good evening. I travel with my patron. He needs the finest room, and I need the one right beside it.",
-            "askDetails": "My patron is small, golden and very demanding. I bring him an offering every night. He has made me everything I am.",
-            "askId": "My patron says I don't need to show you. But since you insist, here. He is watching, you know."
+            "greeting": "Good evening. I am traveling with my patron, who would be most comfortable in the finest room you have.",
+            "askDetails": "He is a quiet companion, though particular about his surroundings. I have learned to bring a suitable gift when we travel.",
+            "askId": "Certainly. I would not want to cause offense by keeping you waiting—he is rather attentive to such things."
           },
           "nightLog": [
             "Baal set a small golden calf on the dresser and bowed to it all night",
@@ -799,9 +799,9 @@
           "visible": ["Tan Skin", "Short Hair", "Average"],
           "idMatchesVisible": true,
           "dialogue": {
-            "greeting": "Evening. I just need a desk and a plug. I'll be on calls most of the night, so don't worry about the bed.",
-            "askDetails": "Big deal closing tomorrow. Months of work. It will all be worth it. It has to be.",
-            "askId": "Here. Quickly, please. Time is money, and I'm already behind."
+            "greeting": "Evening. A desk and a reliable outlet would be enough. I may be working late, so the bed is not important.",
+            "askDetails": "There is a final meeting tomorrow, and I would rather finish properly than sleep halfway through the job. I can rest afterward.",
+            "askId": "Of course. I am on a schedule, but I will not make that your problem."
           },
           "nightLog": [
             "Molo made call after call and never lay down",
@@ -835,7 +835,7 @@
           "face": "( ◕ ‿ ◕ )( ◕ ‿ ◕ )",
           "sex": "Female",
           "idInfo": {
-            "idName": "Legi Onn",
+            "idName": "Legion Marjnacxcnkcnsa",
             "sex": "Female",
             "hair": "Long Hair",
             "skin": "Light Skin",
@@ -845,9 +845,9 @@
           "visible": ["Light Skin", "Long Hair", "Athletic"],
           "idMatchesVisible": true,
           "dialogue": {
-            "greeting": "Good evening. A room, please. Whatever the last guest had is fine for me.",
-            "askDetails": "I'm just like everyone else. I want what everyone wants. I do what everyone does. Isn't that enough?",
-            "askId": "My name is Legi Onn. We are... I mean, I am. Just one person. Just me."
+            "greeting": "Good evening. A room, please. Whatever arrangement worked for the last guest should suit me too.",
+            "askDetails": "I do not need anything special. Most people want the same simple comforts, and I am no different. I think.",
+            "askId": "My name is Legi Onn. We are—sorry, I mean I am—just one traveler, here for the night."
           },
           "nightLog": [
             "Legion repeated every conversation she heard through the walls",
@@ -884,9 +884,9 @@
           "visible": ["Fair Skin", "Short Hair", "Average"],
           "idMatchesVisible": true,
           "dialogue": {
-            "greeting": "Peace, friend. I'm a servant of God on my way to a revival. Surely a fellow believer wouldn't turn a man of God away on a cold night?",
-            "askDetails": "As the Good Book says, God helps those who help themselves. Help me tonight, and I'll pray over your motel. A small seed offering would multiply your blessings, of course.",
-            "askId": "My name is written in heaven, friend. This card is only paper. But here, if you must."
+            "greeting": "Peace, friend. I am traveling to a revival and could use a quiet place to gather my thoughts before morning.",
+            "askDetails": "Faith is strengthened by generosity. Offer a little kindness tonight, and I will remember your motel in my prayers.",
+            "askId": "The card is only a worldly formality, but I will show it if that helps you feel comfortable."
           },
           "nightLog": [
             "Brother Lupo went door to door collecting 'seed offerings' from the other guests",
@@ -927,9 +927,9 @@
           "visible": ["Tan Skin", "Long Hair", "Average"],
           "idMatchesVisible": true,
           "dialogue": {
-            "greeting": "Peace be with you. Open the door. I am the one you have been waiting for.",
-            "askDetails": "Why do you ask? Just believe me and let me in. Do not test me.",
-            "askId": "I need no ID. But since you ask... it says exactly what I tell it to."
+            "greeting": "Peace be with you. I have come a long way, and I trust you will recognize why I am here.",
+            "askDetails": "You are cautious; that is understandable. Still, some things lose their meaning when we insist on proving them.",
+            "askId": "I carry what you need to know. If a card will settle the matter, then you may read it."
           },
           "nightLog": [],
           "anomaly": {
@@ -964,9 +964,9 @@
           "visible": ["Fair Skin", "Short Hair", "Athletic"],
           "idMatchesVisible": true,
           "dialogue": {
-            "greeting": "What a lovely place. I have visited many homes, and yours is special. May I come in?",
-            "askDetails": "I know what you want. I know what everyone wants. Let me help you.",
-            "askId": "Here. Every detail is perfect, as you can see."
+            "greeting": "What a lovely place. I have passed through many homes, but this one feels unusually welcoming. May I come in?",
+            "askDetails": "People often want the same small comforts: safety, rest, and someone who understands them. I can provide those things.",
+            "askId": "Here. You will find every detail in its proper place, exactly as you would expect."
           },
           "nightLog": [],
           "anomaly": {

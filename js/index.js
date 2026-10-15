@@ -29,6 +29,7 @@ const ASSET_PATHS = [
   "audio/lilli-repeat.wav",
   "audio/lilli.wav",
   "audio/lose-heart.wav",
+  "audio/game_win.mp3",
   "audio/UI_accept.wav",
   "audio/UI_click.wav",
   "audio/UI_reject.wav",
@@ -150,10 +151,7 @@ async function preloadAssets() {
     }
   }
   await Promise.all(
-    Array.from(
-      { length: Math.min(MAX_ASSET_LOADS, pending.length) },
-      loadNext,
-    ),
+    Array.from({ length: Math.min(MAX_ASSET_LOADS, pending.length) }, loadNext),
   );
 
   if (failures.length) {
@@ -387,6 +385,13 @@ function playLoseHeartSound() {
     console.warn("Could not play the lose-heart sound.", error);
   });
 }
+function playGameWinSound() {
+  const audio = new Audio(assetUrl("audio/game_win.mp3"));
+  audio.volume = 0.8;
+  audio.play().catch((error) => {
+    console.warn("Could not play the game win sound.", error);
+  });
+}
 function penalizeGoodGuest(guest) {
   state.goodMistakes += 1;
   playLoseHeartSound();
@@ -410,34 +415,59 @@ function soundMarkup(guest) {
 function triggerLegionPanic() {
   const stack = document.querySelector(".legion-stack");
   const image = stack?.querySelector("img");
-  if (!stack || !image) return;
+  const screen = stack?.closest(".guest-screen");
+  const rejectButton = screen?.querySelector("#reject");
+  if (!stack || !image || !screen || !rejectButton) return;
 
-  const duplicates = [];
+  screen.classList.add("legion-panic");
+  const imageBounds = image.getBoundingClientRect();
+  const rejectBounds = rejectButton.getBoundingClientRect();
+  const viewportWidth = document.documentElement.clientWidth;
+  const viewportHeight = document.documentElement.clientHeight;
+  const duplicateCount = 20;
+  let duplicatesAdded = 0;
   const duplicateInterval = window.setInterval(() => {
     const duplicate = image.cloneNode();
     duplicate.alt = "";
     duplicate.setAttribute("aria-hidden", "true");
     duplicate.classList.add("legion-duplicate");
-    duplicate.style.setProperty("--offset-x", `${Math.random() * 180 - 90}px`);
-    duplicate.style.setProperty("--offset-y", `${Math.random() * 180 - 90}px`);
-    stack.append(duplicate);
-    duplicates.push(duplicate);
-  }, 100);
-
-  window.setTimeout(() => {
-    window.clearInterval(duplicateInterval);
-    duplicates.forEach((duplicate) => duplicate.remove());
-  }, 1500);
+    const target =
+      duplicatesAdded >= duplicateCount - 6
+        ? rejectBounds
+        : duplicatesAdded < 5
+          ? imageBounds
+          : {
+              left: 0,
+              top: imageBounds.top,
+              width: viewportWidth,
+              height: Math.max(
+                1,
+                Math.min(viewportHeight, rejectBounds.bottom) - imageBounds.top,
+              ),
+            };
+    duplicate.style.setProperty(
+      "--left",
+      `${target.left + Math.random() * target.width}px`,
+    );
+    duplicate.style.setProperty(
+      "--top",
+      `${target.top + Math.random() * target.height}px`,
+    );
+    screen.append(duplicate);
+    duplicatesAdded += 1;
+    if (duplicatesAdded >= duplicateCount)
+      window.clearInterval(duplicateInterval);
+  }, 110);
 }
 function intro() {
   render(
-    `<section class="screen intro"><div class="intro-card"><div class="intro-bubble">*sighs* another busy day</div><div class="intro-face">(ಠ⌁ಠ)</div></div><div class="intro-caption">Cor Motel</div><button class="continue" id="start">continue</button></section>`,
+    `<section class="screen intro"><div class="intro-card"><div class="intro-bubble">*sighs* another busy day</div><div class="intro-face">(╥﹏╥)</div></div><div class="intro-caption">Cor Motel</div><button class="continue" id="start">continue</button></section>`,
   );
   document.querySelector("#start").onclick = introSecond;
 }
 function introSecond() {
   render(
-    `<section class="screen intro"><div class="intro-card"><div class="intro-bubble">Cor Motel back in business!</div><div class="intro-face">(o⌁¬o)</div></div><button class="continue" id="start">begin Night ${state.night}</button></section>`,
+    `<section class="screen intro"><div class="intro-card"><div class="intro-bubble">Cor Motel back in business!</div><div class="intro-face">(ദ്ദി˙ᗜ˙)</div></div><button class="continue" id="start">Begin Night ${state.night}</button></section>`,
   );
   document.querySelector("#start").onclick = showGuest;
 }
@@ -474,10 +504,10 @@ function ask(kind, guest) {
   document.querySelector(kind === "ID" ? "#id" : "#details")?.remove();
 }
 function acceptGuest(guest) {
+  state.admitted.push(guest);
   if (guest.special === "luci") return delayedLuciDeath(guest);
   if (guest.instantDeath) return badEnding(guest);
   if (guest.special === "revelationDevil") return delayedDevilDeath(guest);
-  state.admitted.push(guest);
   nextGuest();
 }
 function delayedLuciDeath(guest) {
@@ -554,6 +584,11 @@ function reset() {
   state.schedule = buildSchedule();
   intro();
 }
+function formatGuestNames(names) {
+  if (names.length < 2) return names[0] || "The anomaly";
+  if (names.length === 2) return `${names[0]} and ${names[1]}`;
+  return `${names.slice(0, -1).join(", ")}, and ${names[names.length - 1]}`;
+}
 function badEnding(guest, reason = "You gave it a place in the motel.") {
   const uniqueImages = {
     falseJesus: "img/false_jesus_jumpscare.jpg",
@@ -566,8 +601,18 @@ function badEnding(guest, reason = "You gave it a place in the motel.") {
     uniqueImages[guest.special] ||
     `img/jumpscare_option${Math.floor(Math.random() * 5) + 1}.jpg`;
   const audio = `audio/jumpscare_option${audioOption}.mp3`;
-  const title =
-    guest.special === "falseJesus"
+  const currentAnomalyNames = state.admitted
+    .filter((admittedGuest) => admittedGuest.isAnomaly)
+    .map((admittedGuest) => admittedGuest.name)
+    .filter(Boolean);
+  if (guest.isAnomaly && !currentAnomalyNames.length && guest.name)
+    currentAnomalyNames.push(guest.name);
+  const anomalyGreeting = `${formatGuestNames(currentAnomalyNames)} ${
+    currentAnomalyNames.length > 1 ? "were never guests." : "was never a guest."
+  }`;
+  const title = guest.isAnomaly
+    ? anomalyGreeting
+    : guest.special === "falseJesus"
       ? "DISPLAY CORRUPTED"
       : guest.special === "revelationDevil"
         ? "It was never what it seemed."
@@ -598,6 +643,7 @@ function goodEnding() {
   render(
     `<section class="screen result"><div class="section-label">Night 3 complete</div><h1>Good job, Shepherd.</h1><p>You watched carefully, questioned what you saw, and kept Cor Motel safe.</p><button id="again">Play again</button></section>`,
   );
+  playGameWinSound();
   document.querySelector("#again").onclick = reset;
 }
 async function startGameWhenReady() {
