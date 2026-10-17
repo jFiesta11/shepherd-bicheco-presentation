@@ -424,6 +424,146 @@
           "killsPlayer": false,
           "difficulty": 3,
           "note": "Red herring for Lilli. Both stay awake all night, but Ana is praying. Players have to read the whole log and her dialogue, not react to one keyword."
+        },
+        {
+          "id": "norm_12",
+          "name": "Gracia",
+          "face": "( ˶ᵔ ᵕ ᵔ˶ )",
+          "sex": "Female",
+          "idInfo": {
+            "idName": "Gracia Lopez",
+            "sex": "Female",
+            "hair": "Short Hair",
+            "skin": "Tan Skin",
+            "build": "Skinny",
+            "ageOnId": 33
+          },
+          "visible": ["Tan Skin", "Short Hair", "Skinny"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Good evening! Do you have your smallest room? Honestly, a bed and a door that locks is already more than I hoped for today.",
+            "askDetails": "I'm on my way home from a provincial trip. I don't need anything fancy. Thank you for even opening this late.",
+            "askId": "Here you go. Thank you for being careful. It's a comfort that someone is."
+          },
+          "nightLog": [
+            "Gracia wrote a thank-you note and left it on the desk, then was asleep",
+            "Gracia returned a spare blanket she did not need, then was asleep"
+          ],
+          "anomaly": { "isAnomaly": false, "tellType": "none", "tell": null },
+          "commandmentLink": {
+            "type": "virtue",
+            "name": "Contentment",
+            "meaning": "Being thankful for enough instead of chasing more (1 Timothy 6:6-8, Hebrews 13:5). The opposite of Behe"
+          },
+          "ifAdmittedNotKicked": "none",
+          "killsPlayer": false,
+          "difficulty": 1,
+          "note": "Foil for Behe. She asks for the smallest room and thanks you for it. Teaches players that friendly is not the tell. Behe is friendly too, but never satisfied."
+        },
+        {
+          "id": "norm_13",
+          "name": "Lazaro",
+          "face": "( ´ ▽ ` )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Lazaro Dizon",
+            "sex": "Male",
+            "hair": "Short Hair",
+            "skin": "Light Skin",
+            "build": "Heavy",
+            "ageOnId": 49
+          },
+          "visible": ["Light Skin", "Short Hair", "Heavy"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Evening. Any room with a clock will do. I'm up at five for the early shift, and I plan to be asleep by ten.",
+            "askDetails": "I run two jobs, so I know what tired looks like. Tonight I'm not working. My kids made me promise to rest, and I keep my promises.",
+            "askId": "Here. I'd show you my kids' names too, but we'd be here all night."
+          },
+          "nightLog": [
+            "Lazaro called his children to say goodnight, then was asleep by ten",
+            "Lazaro set three alarms, then was asleep"
+          ],
+          "anomaly": { "isAnomaly": false, "tellType": "none", "tell": null },
+          "commandmentLink": {
+            "type": "virtue",
+            "name": "Rest",
+            "meaning": "Working hard but trusting God enough to rest, and putting family before the paycheck (Psalm 127:2, Matthew 11:28). The opposite of Molo"
+          },
+          "ifAdmittedNotKicked": "none",
+          "killsPlayer": false,
+          "difficulty": 2,
+          "note": "Foil for Molo. Both are hardworking. Lazaro stops, calls his family and sleeps. Players who kick anyone who mentions work will be wrong."
+        },
+        {
+          "id": "norm_14",
+          "name": "Severo",
+          "face": "( ¬_¬ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Severo Cruz",
+            "sex": "Male",
+            "hair": "Bald",
+            "skin": "Tan Skin",
+            "build": "Heavy",
+            "ageOnId": 55
+          },
+          "visible": ["Tan Skin", "Bald", "Heavy"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Room. One night. I'll pay now so we don't have to talk later.",
+            "askDetails": "Truck driver. Twelve hours on the road and I'm not in the mood for small talk. That's all there is to it. No tricks.",
+            "askId": "Here. Read it twice if you want. I'm rude, not a liar."
+          },
+          "nightLog": [
+            "Severo grumbled about the hallway noise, then was asleep",
+            "Severo left the exact change for the room on the desk, then was asleep"
+          ],
+          "anomaly": { "isAnomaly": false, "tellType": "none", "tell": null },
+          "commandmentLink": {
+            "type": "virtue",
+            "name": "Integrity",
+            "meaning": "Plain honesty even when he isn't pleasant. Let your yes be yes and your no be no (Matthew 5:37)"
+          },
+          "ifAdmittedNotKicked": "none",
+          "killsPlayer": false,
+          "difficulty": 2,
+          "note": "Looks like a bad guest because he is curt and impatient, but every fact he gives checks out. Teaches that rude is not the same as dangerous. The anomalies are the charming ones."
+        },
+        {
+          "id": "norm_15",
+          "name": "Rosario",
+          "face": "( ˘ ᵕ ˘ )",
+          "sex": "Female",
+          "idInfo": {
+            "idName": "Rosario Salazar",
+            "sex": "Female",
+            "hair": "Long Hair",
+            "skin": "Dark Skin",
+            "build": "Average",
+            "ageOnId": 58
+          },
+          "visible": ["Dark Skin", "Long Hair", "Average"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Good evening, dear. A room with a table by the bed, please. I carry a small crucifix and I need somewhere to set it down.",
+            "askDetails": "It reminds me who I pray to. I don't pray to the object. It's only a reminder, like keeping a letter from someone you love.",
+            "askId": "Here. Take your time. It's older than your motel, so go easy on it."
+          },
+          "nightLog": [
+            "Rosario knelt beside the bed and prayed, her small crucifix on the table",
+            "Rosario prayed quietly, then was asleep by ten"
+          ],
+          "anomaly": { "isAnomaly": false, "tellType": "none", "tell": null },
+          "commandmentLink": {
+            "type": "virtue",
+            "name": "Reverence",
+            "meaning": "Using a symbol to point to God instead of replacing Him. The Second Commandment forbids worshipping carved idols, not remembering who you worship (Exodus 20:4-5). The opposite of Baal"
+          },
+          "ifAdmittedNotKicked": "none",
+          "killsPlayer": false,
+          "difficulty": 3,
+          "note": "Foil for Baal. Both bring an object and kneel. Rosario prays to God with a reminder on the table. Baal bows to the object, demands it have its own room and asks others to bow too. Players have to read what is being worshipped."
         }
       ]
     },
@@ -906,6 +1046,240 @@
           "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends. Motel also loses money",
           "killsPlayer": false,
           "difficulty": 2
+        },
+        {
+          "id": "anoma_13",
+          "name": "Pai",
+          "face": "( ≧ ▽ ≦ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Pai Mon",
+            "sex": "Male",
+            "hair": "Short Hair",
+            "skin": "Fair Skin",
+            "build": "Athletic",
+            "ageOnId": 27
+          },
+          "visible": ["Fair Skin", "Short Hair", "Athletic"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Hey! You must have heard I was coming. Reserve me the room with the best lighting, please. I'll need a good spot to film a short video.",
+            "askDetails": "I'm kind of a big deal online. People follow me everywhere. I'll tag the motel if the room looks good, which is basically free advertising for you.",
+            "askId": "You really don't know who I am? Fine. Here. Fun fact: it has my best angle."
+          },
+          "nightLog": [
+            "Pai filmed himself in the hallway and asked other guests to watch",
+            "Pai knocked on doors asking guests to like and follow him"
+          ],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "dialogue",
+            "tell": "Keeps asking whether you know who he is and offers 'free advertising' in place of payment. His ID is in order, so the dialogue is the giveaway. He treats the player as an audience instead of a host.",
+            "disguise": "Charming and famous-sounding, with a huge smile."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "Fame (Applause)",
+            "meaning": "Living for likes and applause instead of for God. Do not practice your righteousness in front of others to be seen by them (Matthew 6:1). They loved human praise more than praise from God (John 12:43)"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends. Motel also loses money",
+          "killsPlayer": false,
+          "difficulty": 1
+        },
+        {
+          "id": "anoma_14",
+          "name": "Asmo",
+          "face": "( ¬ ᴗ ¬ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Asmo Deus",
+            "sex": "Male",
+            "hair": "Short Hair",
+            "skin": "Tan Skin",
+            "build": "Average",
+            "ageOnId": 35
+          },
+          "visible": ["Tan Skin", "Short Hair", "Average"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Evening. Let's make this fun. Flip a coin: heads, the room is free. Tails, you charge me double. Fair odds, right?",
+            "askDetails": "I don't believe in fixed prices. Life is a bet. Everyone is already gambling, so why not enjoy it? All I need is a card table.",
+            "askId": "A little wager? If I'm lying about my name, I'll pay for the whole night. If I'm not, you owe me a drink. Deal?"
+          },
+          "nightLog": [
+            "Asmo rolled dice alone all night and talked to them",
+            "Asmo bet another guest his room key in a card game"
+          ],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "dialogue",
+            "tell": "Tries to turn the room price into a coin flip and bets on whether his ID is real. Asking for details shows he treats everything as chance. His ID matches, so the dialogue gives him away.",
+            "disguise": "Playful and fun, the life of the party."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "Luck and Gambling",
+            "meaning": "Trusting chance and quick winnings instead of God and honest work. Whoever gathers money little by little makes it grow (Proverbs 13:11). The love of money is a root of all kinds of evil (1 Timothy 6:10)"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends. Motel also loses money",
+          "killsPlayer": false,
+          "difficulty": 1
+        },
+        {
+          "id": "anoma_15",
+          "name": "Belphe",
+          "face": "( ´ ᴗ ` )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Belphe Gor",
+            "sex": "Male",
+            "hair": "Long Hair",
+            "skin": "Fair Skin",
+            "build": "Average",
+            "ageOnId": 46
+          },
+          "visible": ["Fair Skin", "Long Hair", "Average"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Good evening! A room, and while you're at it, a word about your future. Tell me, how would you like to double your savings by morning?",
+            "askDetails": "It's a tiny investment with no risk at all. You put in a little, bring in two friends, and everyone earns. I'm only staying one night, but the returns last forever.",
+            "askId": "Of course, but do you really want to waste time on paperwork when real money is waiting? Sign here first, then I'll show you anything you like."
+          },
+          "nightLog": [
+            "Belphe pitched an 'investment opportunity' at every door in the hallway",
+            "Belphe collected cash from three guests and promised to double it by morning"
+          ],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "dialogue",
+            "tell": "Pitches a no-risk, double-your-money scheme and asks you to recruit others. His ID matches what you see, so only the dialogue shows he is a pyramid-scheme recruiter. If it sounds too good to be true, it is.",
+            "disguise": "A smooth, friendly mentor who sounds like a successful businessman."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "Get-Rich-Quick",
+            "meaning": "Chasing easy money instead of honest work and trust in God. Wealth gained hastily will dwindle (Proverbs 13:11). Whoever hastens to be rich will not go unpunished (Proverbs 28:20)"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends. Motel also loses money",
+          "killsPlayer": false,
+          "difficulty": 2
+        },
+        {
+          "id": "anoma_16",
+          "name": "Sangui",
+          "face": "( ◕ ◡ ◕ )",
+          "sex": "Female",
+          "idInfo": {
+            "idName": "Sangui Suga",
+            "sex": "Female",
+            "hair": "Short Hair",
+            "skin": "Light Skin",
+            "build": "Average",
+            "ageOnId": 51
+          },
+          "visible": ["Tan Skin", "Short Hair", "Average"],
+          "idMatchesVisible": false,
+          "dialogue": {
+            "greeting": "Welcome, welcome. No need to pay tonight, dear. Consider it a favor. We can settle up later. Just a little extra, that's all.",
+            "askDetails": "I help travelers who are short on cash. A room tonight, a small payment every week. It's practically charity. Everyone I've helped is still paying me back, happily.",
+            "askId": "The card? It's a few years old. People change, don't you think? What matters is our little arrangement."
+          },
+          "nightLog": [
+            "Sangui lent money to three guests and wrote their names in a small black book",
+            "Sangui knocked on a guest's door to remind them of a debt they never agreed to"
+          ],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "idMismatch",
+            "tell": "ID says Light Skin but she visibly has Tan Skin. She offers 'free' favors that quietly turn into debt. She wants your name on a promise more than your money tonight.",
+            "disguise": "Warm and motherly, always offering to help."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "Debt (The Lender)",
+            "meaning": "Becoming enslaved to what you owe. The borrower is slave to the lender (Proverbs 22:7). Interest and debt traps are the modern chains that make money your master"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends. Motel also loses money",
+          "killsPlayer": false,
+          "difficulty": 2
+        },
+        {
+          "id": "anoma_17",
+          "name": "Asta",
+          "face": "( ◔ ⌓ ◔ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Asta Roth",
+            "sex": "Male",
+            "hair": "Bald",
+            "skin": "Light Skin",
+            "build": "Skinny",
+            "ageOnId": 62
+          },
+          "visible": ["Light Skin", "Bald", "Skinny"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Evening. Before the room, tell me about the safe. Is it really fireproof? And the doors, how many bolts?",
+            "askDetails": "I trust no one. I've learned that the only safe thing is a full wallet. I travel with everything I own, and I count it every hour.",
+            "askId": "I should be asking for yours first. Anyone could be a thief. Fine, here is mine."
+          },
+          "nightLog": [
+            "Asta barricaded the door with the dresser and slept sitting on his suitcase",
+            "Asta counted his savings every hour and never let the suitcase out of his arms"
+          ],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "nightLog",
+            "tell": "Like Prudencia he asks about locks and exits, but his questions are about protecting his money, not testing the place, and his night log shows him barricaded in with his cash. His ID checks out, so only the night log separates him from the honest guests.",
+            "disguise": "A cautious, careful traveler who sounds sensible."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "Security (Trusting Savings)",
+            "meaning": "Trusting savings and locks instead of God. Some trust in chariots and some in horses, but we trust in the name of the Lord (Psalm 20:7). Do not store up treasures on earth (Matthew 6:19)"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends",
+          "killsPlayer": false,
+          "difficulty": 3
+        },
+        {
+          "id": "anoma_18",
+          "name": "Phari",
+          "face": "( ˙ ▽ ˙ )",
+          "sex": "Male",
+          "idInfo": {
+            "idName": "Phari See",
+            "sex": "Male",
+            "hair": "Long Hair",
+            "skin": "Light Skin",
+            "build": "Heavy",
+            "ageOnId": 50
+          },
+          "visible": ["Light Skin", "Long Hair", "Heavy"],
+          "idMatchesVisible": true,
+          "dialogue": {
+            "greeting": "Good evening. I'll pay in full, and I'd like everyone in the lobby to see it. A man should be known for his generosity.",
+            "askDetails": "I donate to many causes, as I always tell people. Last week I gave more than most families earn in a year. Please write that down somewhere visible.",
+            "askId": "Certainly. But why not read it aloud? It's an honor to be known. And do mention the donations."
+          },
+          "nightLog": [
+            "Phari taped a note about his donations to the lobby wall",
+            "Phari made a show of handing money to a guest while the others watched"
+          ],
+          "anomaly": {
+            "isAnomaly": true,
+            "tellType": "nightLog",
+            "tell": "Looks like Stewart on the surface: he pays in full and gives money away. The difference is the audience. He announces every gift and wants it recorded, while Stewart gives quietly. His ID matches, so only the night log shows he gives to be seen.",
+            "disguise": "A generous, respected pillar of the community."
+          },
+          "commandmentLink": {
+            "type": "idol",
+            "name": "Hypocrisy (Giving to Be Seen)",
+            "meaning": "Giving to be seen instead of to serve. When you give, do not announce it with trumpets (Matthew 6:2). Honoring God with the lips while being far from Him inside (Isaiah 29:13)"
+          },
+          "ifAdmittedNotKicked": "Game over (jumpscare) when the night ends",
+          "killsPlayer": false,
+          "difficulty": 3
         }
       ]
     },

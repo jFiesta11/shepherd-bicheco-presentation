@@ -22,9 +22,11 @@ const ASSET_PATHS = [
   "audio/amon.wav",
   "audio/belz_dialogue.mp3",
   "audio/Four Voices Whispering Horror Film Sound Effects.mp3",
+  "audio/jesus_dialogue.mp3",
   "audio/jumpscare_option1.mp3",
   "audio/jumpscare_option2.mp3",
   "audio/jumpscare_option3.mp3",
+  "audio/jumpscare_option4.mp3",
   "audio/legion_hello.wav",
   "audio/lilli-repeat.wav",
   "audio/lilli.wav",
@@ -210,6 +212,7 @@ function normalizeCharacter(raw, index, anomaly = false) {
       amon: "audio/amon.wav",
       lilli: "audio/lilli.wav",
       belz: "audio/belz_dialogue.mp3",
+      jesus: "audio/jesus_dialogue.mp3",
       legion: "audio/legion_hello.wav",
     }[lowerName] || null;
   const roleSpecial =
@@ -596,7 +599,7 @@ function badEnding(guest, reason = "You gave it a place in the motel.") {
     revelationDevil: "img/revelation_devil_jumpscare.jpg",
     falseProphet: "img/false_prophet_jumpscare.jpe",
   };
-  const audioOption = Math.floor(Math.random() * 3) + 1;
+  const audioOption = Math.floor(Math.random() * 4) + 1;
   const image =
     uniqueImages[guest.special] ||
     `img/jumpscare_option${Math.floor(Math.random() * 5) + 1}.jpg`;
@@ -629,7 +632,16 @@ function badEnding(guest, reason = "You gave it a place in the motel.") {
     guest.special === "falseJesus",
   );
   render(
-    `<section class="screen jumpscare ${guest.special || "random-jumpscare"}"><div class="phone-glitch-overlay" aria-hidden="true"><span class="glitch-status">DISPLAY SIGNAL LOST</span><span class="glitch-tear glitch-tear-one"></span><span class="glitch-tear glitch-tear-two"></span><span class="glitch-fragment">0xF4 // IMAGE CORRUPTED</span></div>${image ? `<img class="jumpscare-image" src="${assetUrl(image)}" alt="Jumpscare" decoding="async" fetchpriority="high" />` : ""}<div class="jumpscare-content"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(reason)}</p><p class="danger">HEART LOST — BAD ENDING</p><button class="continue" id="retry">Try again</button></div><audio src="${assetUrl(audio)}" autoplay></audio></section>`,
+    `<section class="screen jumpscare ${guest.special || "random-jumpscare"}"><div class="phone-glitch-overlay" aria-hidden="true"><span class="glitch-status">DISPLAY SIGNAL LOST</span><span class="glitch-tear glitch-tear-one"></span><span class="glitch-tear glitch-tear-two"></span><span class="glitch-fragment">0xF4 // IMAGE CORRUPTED</span></div>${image ? `<img class="jumpscare-image" src="${assetUrl(image)}" alt="Jumpscare" decoding="async" fetchpriority="high" />` : ""}<div class="jumpscare-content"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(reason)}</p><p class="danger">HEART LOST — BAD ENDING</p><button class="continue" id="retry" disabled>Try again</button></div><audio src="${assetUrl(audio)}" autoplay></audio></section>`,
+  );
+  const jumpscareImage = document.querySelector(".jumpscare-image");
+  const retryButton = document.querySelector("#retry");
+  jumpscareImage?.addEventListener(
+    "animationend",
+    (event) => {
+      if (event.animationName === "jumpscareFade") retryButton.disabled = false;
+    },
+    { once: true },
   );
   const jumpAudio = document.querySelector(".jumpscare audio");
   if (jumpAudio) {
