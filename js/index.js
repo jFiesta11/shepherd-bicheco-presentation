@@ -233,7 +233,7 @@ function normalizeCharacter(raw, index, anomaly = false) {
     name,
     face: raw.face || "(・_・)",
     faceAsset: raw.faceAsset || raw.image || raw.asset || roleImage,
-    soundAsset: roleSound,
+    soundAsset: raw.soundAsset || roleSound,
     repeatSound: lowerName === "lilli" ? "audio/lilli-repeat.wav" : null,
     faceAssetType: "image",
     sees: raw.visible || raw.sees || [],
@@ -366,7 +366,10 @@ async function loadGame() {
   intro();
 }
 function faceMarkup(guest) {
-  const jesusClass = /jesus/i.test(guest.name || "") ? " jesus-image" : "";
+  const jesusClass =
+    guest.special === "falseJesus" || /jesus/i.test(guest.name || "")
+      ? " jesus-image"
+      : "";
   if (guest.special === "legion")
     return `<span class="legion-stack"><img class="guest-image legion-image" src="${assetUrl("img/legion.png")}" alt="Legion" decoding="async" fetchpriority="high" /></span>`;
   if (guest.special === "belz")
@@ -613,20 +616,25 @@ function badEnding(guest, reason = "You gave it a place in the motel.") {
   const anomalyGreeting = `${formatGuestNames(currentAnomalyNames)} ${
     currentAnomalyNames.length > 1 ? "were never guests." : "was never a guest."
   }`;
-  const title = guest.isAnomaly
-    ? anomalyGreeting
-    : guest.special === "falseJesus"
-      ? "DISPLAY CORRUPTED"
+  const namedDeathTitle = {
+    falseJesus: `${guest.name || "Jesus"} was never a guest.`,
+    luci: `${guest.name || "Luci"} was never a guest.`,
+  }[guest.special];
+  const title =
+    namedDeathTitle ||
+    (guest.isAnomaly
+      ? anomalyGreeting
       : guest.special === "revelationDevil"
         ? "It was never what it seemed."
         : reason.includes("two genuine guests")
           ? "Two genuine guests were turned away."
-          : `${guest.name || "The guest"} was never safe.`;
+          : `${guest.name || "The guest"} was never safe.`);
   if (
     guest.special === "falseJesus" &&
     reason === "You gave it a place in the motel."
   )
-    reason = "The image on your screen is no longer trustworthy.";
+    reason =
+      "(John 20:25)'So the other disciples told him, “We have seen the Lord!”. But he said to them, “Unless I see the nail marks in his hands and put my finger where the nails were, and put my hand into his side, I will not believe.”'";
   document.body.classList.toggle(
     "phone-glitch-active",
     guest.special === "falseJesus",

@@ -1287,7 +1287,10 @@
       "instaDeathAnomaly": [
         {
           "id": "kill_1",
-          "name": "Jesus",
+          "name": "S̶̛̫̒̃̆̀͝ą̷̹̦̊̆͒ͅt̸̟̠̙̤͎̤́̈́ȃ̸̻̫̝̪̀ͅͅn̶̝̙͖͔̣͕͚͖̗͕̼͑́̏͑͝ḁ̵̇s̴͈̯͎̭͙̟̃̎͆̇̂̄́͂͘",
+          "faceAsset": "img/jesus_at_the_door.jpeg",
+          "soundAsset": "audio/jesus_dialogue.mp3",
+          "special": "falseJesus",
           "face": "( ✧ ‿ ✧ )",
           "sex": "Male",
           "idInfo": {

@@ -509,6 +509,10 @@ button:disabled {
   z-index: 2;
   opacity: 0;
   animation: messageReveal 1.2s ease-out 3.2s forwards;
+  p {
+    line-height: 40px;
+    padding: 20px;
+  }
 }
 .falseJesus .jumpscare-content {
   z-index: 4;
