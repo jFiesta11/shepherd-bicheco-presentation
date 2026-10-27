@@ -404,7 +404,7 @@ function penalizeGoodGuest(guest) {
   if (state.goodMistakes >= 2) {
     badEnding(
       guest,
-      "You rejected or kicked out two genuine guests. Your last heart is gone.",
+      "You rejected or kicked out two genuine guests. Your heart is corrupted.",
     );
     return true;
   }
@@ -656,7 +656,7 @@ function badEnding(guest, reason = "You gave it a place in the motel.") {
     jumpAudio.volume = 1;
     jumpAudio.play().catch(() => {});
   }
-  if (navigator.vibrate) navigator.vibrate([180, 100, 260, 100, 500]);
+  if (navigator.vibrate) navigator.vibrate(1140);
   document.querySelector("#retry").onclick = reset;
 }
 function goodEnding() {
